@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/porter-32x32.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/porter-16x16.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="uniapp&amp;#x9879;&amp;#x76EE;&amp;#x8FDB;&amp;#x884C; &amp;#x201C;app&amp;#x7AEF;Google&amp;#x6388;&amp;#x6743;&amp;#x767B;&amp;#x5F55;&amp;#x53CA;&amp;#x62C9;&amp;#x8D77;&amp;#x652F;&amp;#x4ED8;&amp;#x201D; &amp;#x6D41;&amp;#x7A0B;&amp;#xFF0C; &amp;#x4EE5;&amp;#x53CA;google&amp;#x540E;">
+<meta name="keywords" content="uniapp,google,vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google授权登录及Android支付(uniapp-app)">
+<meta property="og:url" content="https://ringo.org.cn/google-uniapp/index.html">
+<meta property="og:site_name" content="Ringo">
+<meta property="og:description" content="uniapp&amp;#x9879;&amp;#x76EE;&amp;#x8FDB;&amp;#x884C; &amp;#x201C;app&amp;#x7AEF;Google&amp;#x6388;&amp;#x6743;&amp;#x767B;&amp;#x5F55;&amp;#x53CA;&amp;#x62C9;&amp;#x8D77;&amp;#x652F;&amp;#x4ED8;&amp;#x201D; &amp;#x6D41;&amp;#x7A0B;&amp;#xFF0C; &amp;#x4EE5;&amp;#x53CA;google&amp;#x540E;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ringo.org.cn/google-uniapp/google-uniapp_1.png">
+<meta property="og:image" content="https://ringo.org.cn/google-uniapp/google-uniapp_2.png">
+<meta property="og:image" content="https://ringo.org.cn/google-uniapp/google-uniapp_4.png">
+<meta property="og:image" content="https://ringo.org.cn/google-uniapp/google-uniapp_3.png">
+<meta property="og:image" content="https://ringo.org.cn/google-uniapp/google-uniapp_5.png">
+<meta property="og:image" content="https://ringo.org.cn/google-uniapp/google-uniapp_6.jpg">
+<meta property="og:updated_time" content="2023-08-28T06:02:59.075Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Google授权登录及Android支付(uniapp-app)">
+<meta name="twitter:description" content="uniapp&amp;#x9879;&amp;#x76EE;&amp;#x8FDB;&amp;#x884C; &amp;#x201C;app&amp;#x7AEF;Google&amp;#x6388;&amp;#x6743;&amp;#x767B;&amp;#x5F55;&amp;#x53CA;&amp;#x62C9;&amp;#x8D77;&amp;#x652F;&amp;#x4ED8;&amp;#x201D; &amp;#x6D41;&amp;#x7A0B;&amp;#xFF0C; &amp;#x4EE5;&amp;#x53CA;google&amp;#x540E;">
+<meta name="twitter:image" content="https://ringo.org.cn/google-uniapp/google-uniapp_1.png">
+  <link rel="canonical" href="https://ringo.org.cn/google-uniapp/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Google授权登录及Android支付(uniapp-app) | Ringo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ringo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-lab">
+      
+    
+
+    <a href="/lab/" rel="section"><i class="menu-item-icon fa fa-fw fa-balance-scale"></i> <br>lab</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th-list"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ringo.org.cn/google-uniapp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ringo">
+      <meta itemprop="description" content="体验人生, 享受生活">
+      <meta itemprop="image" content="/images/porter-avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ringo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Google授权登录及Android支付(uniapp-app)
+
+          
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2023-08-28 10:40:44 / 修改时间：14:02:59" itemprop="dateCreated datePublished" datetime="2023-08-28T10:40:44+08:00">2023-08-28</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/uniapp/" itemprop="url" rel="index"><span itemprop="name">uniapp</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/google-uniapp/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/google-uniapp/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+        <p>uniapp&#x9879;&#x76EE;&#x8FDB;&#x884C; &#x201C;app&#x7AEF;Google&#x6388;&#x6743;&#x767B;&#x5F55;&#x53CA;&#x62C9;&#x8D77;&#x652F;&#x4ED8;&#x201D; &#x6D41;&#x7A0B;&#xFF0C; &#x4EE5;&#x53CA;google&#x540E;&#x53F0;&#x76F8;&#x5173;&#x914D;&#x7F6E;</p>
+<a id="more"></a>
+<h3 id="&#x8C37;&#x6B4C;&#x6388;&#x6743;&#x767B;&#x5F55;"><a href="#&#x8C37;&#x6B4C;&#x6388;&#x6743;&#x767B;&#x5F55;" class="headerlink" title="&#x8C37;&#x6B4C;&#x6388;&#x6743;&#x767B;&#x5F55;"></a>&#x8C37;&#x6B4C;&#x6388;&#x6743;&#x767B;&#x5F55;</h3><p>uniapp&#x9879;&#x76EE;&#x8C37;&#x6B4C;&#x6388;&#x6743;&#x767B;&#x5F55;&#x53C2;&#x8003;&#xFF1A;<br><a href="https://uniapp.dcloud.net.cn/tutorial/app-oauth-google.html#%E5%BC%80%E9%80%9A" target="_blank" rel="noopener">&#x5B98;&#x65B9;&#x94FE;&#x63A5;</a></p>
+<p>app&#x7AEF;&#x6388;&#x6743;&#x767B;&#x5F55;&#x914D;&#x7F6E;&#x6CE8;&#x610F;&#xFF1A;</p>
+<p>manifest.json =&gt; APP &#x6A21;&#x5757;&#x914D;&#x7F6E; =&gt; OAuth(&#x767B;&#x5F55;&#x9274;&#x6743;) =&gt; Google&#x767B;&#x5F55; =&gt; IOS&#x5E73;&#x53F0;&#x5BA2;&#x6237;&#x7AEF;ID</p>
+<p>&#x6B64;&#x5904;&#x586B;&#x5165;ios&#x7AEF; &#x5BA2;&#x6237;&#x7AEF;ID</p>
+<p>&#x5BF9;&#x4E8E;android&#x7AEF;&#x914D;&#x7F6E;&#xFF0C;&#x65E0;&#x987B;&#x5728;manifest.json&#x4E2D;&#x914D;&#x7F6E;&#xFF0C;&#x4F46;&#x662F;&#x5728;Google Cloud&#x540E;&#x53F0;&#xFF0C;&#x4E5F;&#x540C;&#x6837;&#x9700;&#x8981;&#x521B;&#x5EFA; android&#x7AEF;&#x5BA2;&#x6237;&#x7AEF;ID</p>
+<blockquote>
+<p>android&#x7AEF;&#xFF0C;&#x8BF7;&#x4E3A;&#x9879;&#x76EE;&#x521B;&#x5EFA;keystore&#x6587;&#x4EF6;&#xFF0C;&#x6839;&#x636E;keystore&#x6587;&#x4EF6;&#x83B7;&#x53D6;&#x5BF9;&#x5E94;&#x7684;SHA-1&#x8BC1;&#x4E66;&#x6307;&#x7EB9;&#xFF0C;&#x5BF9;&#x5E94;&#x751F;&#x6210;&#x547D;&#x4EE4;&#x5728;Google Cloud&#x540E;&#x53F0;&#x914D;&#x7F6E;&#x5BA2;&#x6237;&#x7AEF;ID&#x4E0B;&#x65B9;&#x6709;</p>
+</blockquote>
+<p> <img src="/google-uniapp/google-uniapp_1.png" alt="google-uniapp"></p>
+<blockquote>
+<p>&#x9488;&#x5BF9; SHA-1&#x8BC1;&#x4E66;&#x6307;&#x7EB9;&#xFF0C;&#x8C03;&#x8BD5;&#x65F6;&#xFF0C;&#x8BF7;&#x5C06;&#x6B64; SHA-1&#x6307;&#x7EB9;&#x66FF;&#x6362;&#x4E3A; &#x672C;&#x5730;keystore&#x6587;&#x4EF6;&#x7684;&#x5BF9;&#x5E94;SHA-1&#x503C;&#xFF0C;&#x82E5;app&#x9700;&#x8981;&#x4E0A;&#x7EBF;&#x6216;&#x9488;&#x5BF9;&#x5DF2;&#x4E0A;&#x4F20;&#x5230;google&#x540E;&#x53F0;&#x7684;aab&#x5305;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#xFF0C;&#x8BF7;&#x5C06;&#x6B64;&#x5904;SHA-1&#x503C;&#x66FF;&#x6362;&#x4E3A;Google&#x751F;&#x6210;&#x7684;&#x3010;&#x5E94;&#x7528;&#x7B7E;&#x540D;&#x5BC6;&#x94A5;&#x8BC1;&#x4E66;&#x3011;&#xFF08;&#x53EF;&#x5728;google play console&#x2013;&#x8BBE;&#x7F6E;&#x2013;&#x5E94;&#x7528;&#x7B7E;&#x540D; &#x9875;&#x9762;&#x67E5;&#x770B;&#xFF09;&#xFF0C;&#x5426;&#x5219;google&#x767B;&#x5F55;&#x65E0;&#x6CD5;&#x56DE;&#x8C03;</p>
+</blockquote>
+<p><img src="/google-uniapp/google-uniapp_2.png" alt="google-uniapp"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #ifdef APP-PLUS</span></span><br><span class="line">  <span class="keyword">const</span> _that = <span class="keyword">this</span>;</span><br><span class="line">  uni.login({</span><br><span class="line">    provider: <span class="string">&apos;google&apos;</span>,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span>(<span class="params">loginRes</span>) </span>{</span><br><span class="line">      <span class="built_in">console</span>.log(loginRes)</span><br><span class="line">      <span class="keyword">if</span> (loginRes.errMsg === <span class="string">&apos;login:ok&apos;</span>) {</span><br><span class="line">        <span class="comment">// &#x767B;&#x5F55;&#x6210;&#x529F;</span></span><br><span class="line">        uni.getUserInfo({</span><br><span class="line">          provider: <span class="string">&apos;google&apos;</span>,</span><br><span class="line">          success: <span class="function"><span class="keyword">function</span>(<span class="params">info</span>) </span>{</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&apos;google &#x767B;&#x5F55;===&gt;:&apos;</span>, info);</span><br><span class="line">            <span class="comment">// openid: info.userInfo.openid,</span></span><br><span class="line">            <span class="comment">// unionid: info.userInfo.unionid,</span></span><br><span class="line">            <span class="comment">// email: info.userInfo.email,</span></span><br><span class="line">            <span class="comment">// todo your own business</span></span><br><span class="line">          },</span><br><span class="line">        });</span><br><span class="line">      } <span class="keyword">else</span> {</span><br><span class="line">        uni.showToast({</span><br><span class="line">          icon: <span class="string">&apos;none&apos;</span>,</span><br><span class="line">          title: <span class="string">&apos;Login Fail: &apos;</span> + <span class="built_in">JSON</span>.stringify(loginRes),</span><br><span class="line">        });</span><br><span class="line">      }</span><br><span class="line">    },</span><br><span class="line">    fail: <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>{</span><br><span class="line">      <span class="built_in">console</span>.log(err);</span><br><span class="line">      uni.showToast({</span><br><span class="line">        icon: <span class="string">&apos;none&apos;</span>,</span><br><span class="line">        title: <span class="string">&apos;Connect Fail: &apos;</span> + <span class="built_in">JSON</span>.stringify(err),</span><br><span class="line">      });</span><br><span class="line">    }</span><br><span class="line">  });</span><br><span class="line"><span class="comment">// #endif</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="google&#x652F;&#x4ED8;app&#x7AEF;&#x62C9;&#x8D77;"><a href="#google&#x652F;&#x4ED8;app&#x7AEF;&#x62C9;&#x8D77;" class="headerlink" title="google&#x652F;&#x4ED8;app&#x7AEF;&#x62C9;&#x8D77;"></a>google&#x652F;&#x4ED8;app&#x7AEF;&#x62C9;&#x8D77;</h3><p>&#x4EE3;&#x7801;&#x5C42;&#x9762;&#xFF1A;uniapp&#x63D2;&#x4EF6;&#x5E02;&#x573A;&#x8D2D;&#x4E70;&#x63D2;&#x4EF6;&#xFF0C;&#x6309;&#x8BF4;&#x660E;&#x4F7F;&#x7528;</p>
+<p>&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x5C42;&#x9762;&#xFF1A;</p>
+<p>1&#x3001;&#x70B9;&#x51FB;&#x652F;&#x4ED8;&#xFF0C;&#x68C0;&#x67E5;&#x5386;&#x53F2;&#x8BA2;&#x5355;(&#x67E5;&#x8BE2;&#x6210;&#x529F;&#xFF0C;&#x82E5;&#x6709;&#x9057;&#x7559;&#x5219;&#x670D;&#x52A1;&#x7AEF;&#x9A8C;&#x8BC1;&#x5E76;&#x6D88;&#x8017;)&#xFF0C;&#x662F;&#x5426;&#x5DF2;&#x88AB;&#x6D88;&#x8D39;&#xFF0C;&#x5904;&#x7406;&#x5B8C;&#x6210;&#xFF0C;&#x67E5;&#x8BE2;Google&#x5546;&#x54C1;&#x5217;&#x8868;&#xFF0C;&#x67E5;&#x8BE2;&#x6210;&#x529F;&#xFF0C;&#x521B;&#x5EFA;&#x8BA2;&#x5355;&#xFF0C;&#x521B;&#x5EFA;&#x8BA2;&#x5355;&#x6210;&#x529F;&#xFF0C;&#x53D1;&#x8D77;Google&#x652F;&#x4ED8;&#xFF0C;&#x5C06;&#x8BA2;&#x5355;&#x4F20;&#x9012;&#x5230;google&#x652F;&#x4ED8;&#x65B9;&#x6CD5;&#x5185;<br>2&#x3001;&#x9488;&#x5BF9;google&#x652F;&#x4ED8;&#x65B9;&#x6CD5;&#xFF0C;&#x652F;&#x4ED8;&#x6210;&#x529F;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x8D2D;&#x4E70;&#x6210;&#x529F;&#xFF0C;&#x9488;&#x5BF9;&#x7ED3;&#x679C;&#x8FDB;&#x884C;&#x63D0;&#x793A;<br>3&#x3001;&#x5BF9;&#x4E8E;&#x7B2C;&#x4E8C;&#x6B65;&#xFF0C;&#x652F;&#x4ED8;&#x7ED3;&#x679C;&#x975E;&#x6210;&#x529F;&#xFF0C;&#x82E5;errorCode===7&#xFF0C;&#x4EE3;&#x8868;&#x6B64;&#x5546;&#x54C1;&#x672A;&#x6D88;&#x8D39;&#xFF0C;&#x5219;&#x67E5;&#x8BE2;&#x5386;&#x53F2;&#x8BA2;&#x5355;&#xFF0C;&#x670D;&#x52A1;&#x7AEF;&#x9A8C;&#x8BC1;&#x5E76;&#x6D88;&#x8017;<br>4&#x3001;&#x5BF9;&#x4E8E;&#x6D88;&#x8D39;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;&#x670D;&#x52A1;&#x7AEF;&#x9A8C;&#x8BC1;&#x5E76;&#x6D88;&#x8D39;&#x8BA2;&#x5355;&#xFF0C;&#x524D;&#x7AEF;&#x5E76;&#x6CA1;&#x6709;&#x8FDB;&#x884C;&#x6D88;&#x8D39;&#xFF0C;&#x6CE8;&#x610F;&#x7528;&#x6237;&#x8D2D;&#x4E70;&#x6210;&#x529F;&#x540E;&#xFF0C;&#x5FC5;&#x987B;&#x5148;&#x670D;&#x52A1;&#x7AEF;&#x9A8C;&#x8BC1;&#x8BA2;&#x5355;&#x6709;&#x6548;&#x6027;&#xFF0C;&#x518D;&#x53BB;&#x6D88;&#x8D39;&#x8BA2;&#x5355;&#xFF0C;&#x63A5;&#x7740;&#x518D;&#x53BB;&#x7ED9;&#x7528;&#x6237;&#x53D1;&#x9001;&#x76F8;&#x5173;&#x670D;&#x52A1;<br>5&#x3001;&#x7528;&#x6237;&#x8FDB;&#x5165;app&#x65F6;&#xFF0C;&#x53EF;&#x67E5;&#x8BE2;&#x8D2D;&#x4E70;&#x8BB0;&#x5F55;&#xFF0C;&#x9488;&#x5BF9;&#x9700;&#x8981;&#x5904;&#x7406;&#x7684;&#x8BA2;&#x5355;&#x8FDB;&#x884C;&#x518D;&#x6B21;&#x6D88;&#x8D39;&#xFF08;&#x53CA;&#x540E;&#x7EED;&#x64CD;&#x4F5C;&#xFF09;&#x5904;&#x7406;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #ifdef APP</span></span><br><span class="line"><span class="keyword">const</span> googlePay = uni.requireNativePlugin(<span class="string">&apos;GT-GooglePay-V5__PayModule&apos;</span>);</span><br><span class="line"><span class="comment">// #endif</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> {</span><br><span class="line">  data() {</span><br><span class="line">		<span class="keyword">return</span> {</span><br><span class="line">			<span class="comment">// #ifdef APP</span></span><br><span class="line">			prdList: [],</span><br><span class="line">			payList: [],</span><br><span class="line">			isGoogleConnect: <span class="literal">false</span>,</span><br><span class="line">			isPaying: <span class="literal">false</span>,</span><br><span class="line">      google_sku_id: <span class="string">&apos;app_appname_companyname_coin10000&apos;</span></span><br><span class="line">			<span class="comment">// #endif</span></span><br><span class="line">		}</span><br><span class="line">	},</span><br><span class="line">	onUnload() {</span><br><span class="line">		uni.setStorageSync(<span class="string">&apos;pli&apos;</span>, [])</span><br><span class="line">		uni.hideLoading()</span><br><span class="line">	},</span><br><span class="line">	methods: {</span><br><span class="line">    doInit() {</span><br><span class="line">      googlePay.doInit({}, e =&gt; {</span><br><span class="line">          <span class="keyword">if</span> (e.code == <span class="number">200</span>) {</span><br><span class="line">            <span class="comment">// &#x521D;&#x59CB;&#x5316;&#x6210;&#x529F;</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&apos;&#x8FDE;&#x63A5;&#x8C37;&#x6B4C;&#x6210;&#x529F;&apos;</span>);</span><br><span class="line">            <span class="keyword">this</span>.isGoogleConnect = <span class="literal">true</span></span><br><span class="line">            <span class="comment">// &#x67E5;&#x8BE2;&#x5386;&#x53F2;&#x8BA2;&#x5355;</span></span><br><span class="line">            <span class="keyword">this</span>.doQueryPurchases(<span class="function">(<span class="params">res</span>) =&gt;</span> {</span><br><span class="line">              <span class="comment">// console.log(res)</span></span><br><span class="line">              <span class="keyword">this</span>.doQuerySku()</span><br><span class="line">            })</span><br><span class="line">          } <span class="keyword">else</span> {</span><br><span class="line">            <span class="comment">// &#x521D;&#x59CB;&#x5316;&#x5931;&#x8D25;</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&apos;&#x8FDE;&#x63A5;&#x8C37;&#x6B4C;&#x5931;&#x8D25;&apos;</span>);</span><br><span class="line">            uni.hideLoading()</span><br><span class="line">            that.showToast(<span class="string">&apos;&#x8FDE;&#x63A5;&#x8C37;&#x6B4C;&#x5931;&#x8D25;&apos;</span>);</span><br><span class="line">            <span class="keyword">this</span>.isPaying = <span class="literal">false</span></span><br><span class="line">          }</span><br><span class="line">        });</span><br><span class="line">    },</span><br><span class="line">    doQueryPurchases(callback) {</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="comment">// console.log(&apos;do doQueryPurchases function.&apos;);</span></span><br><span class="line">        uni.setStorageSync(<span class="string">&apos;pli&apos;</span>, []) <span class="comment">// &#x9488;&#x5BF9;&#x91CD;&#x590D;&#x8BF7;&#x6C42;</span></span><br><span class="line">        googlePay.doQueryPurchases(</span><br><span class="line">          <span class="string">&apos;inapp&apos;</span>,</span><br><span class="line">          e =&gt; {</span><br><span class="line">            <span class="keyword">if</span> (e.code == <span class="number">200</span>) {</span><br><span class="line">              <span class="comment">// &#x67E5;&#x8BE2;&#x6210;&#x529F;</span></span><br><span class="line">              <span class="comment">// console.log(&apos;queryPurchases&#x6210;&#x529F;&apos;);</span></span><br><span class="line">              <span class="keyword">if</span> (e.purchasesList == <span class="literal">null</span> || e.purchasesList.length == <span class="number">0</span>) {</span><br><span class="line">                <span class="comment">// &#x65E0;&#x9057;&#x7559;&#x5F85;&#x5904;&#x7406;&#x8BA2;&#x5355;</span></span><br><span class="line">                callback()</span><br><span class="line">              } <span class="keyword">else</span> {</span><br><span class="line">                that.payList = e.purchasesList</span><br><span class="line">                <span class="comment">// &#x670D;&#x52A1;&#x7AEF;&#x9A8C;&#x8BC1;&#x5E76;&#x6D88;&#x8017;</span></span><br><span class="line">                that.verifyOrder(callback)</span><br><span class="line">              }</span><br><span class="line">            } <span class="keyword">else</span> {</span><br><span class="line">              <span class="comment">// &#x67E5;&#x8BE2;&#x5931;&#x8D25;</span></span><br><span class="line">              <span class="built_in">console</span>.log(<span class="string">&apos;google queryPurchases&#x5931;&#x8D25;&apos;</span>);</span><br><span class="line">            }</span><br><span class="line">          }</span><br><span class="line">        );</span><br><span class="line">      },</span><br><span class="line">      <span class="comment">// &#x670D;&#x52A1;&#x5668;&#x786E;&#x8BA4;&#x8BA2;&#x5355;</span></span><br><span class="line">      verifyOrder(callback) {</span><br><span class="line">        <span class="keyword">const</span> promises = []</span><br><span class="line">        <span class="keyword">this</span>.payList.map(<span class="function">(<span class="params">item, index</span>) =&gt;</span> {</span><br><span class="line">          promises.push(<span class="keyword">this</span>.verifyOrderRequest(<span class="built_in">JSON</span>.parse(item.originalJson)))</span><br><span class="line">        })</span><br><span class="line">        <span class="built_in">Promise</span>.allSettled(promises).then(<span class="function"><span class="params">res</span> =&gt;</span> {</span><br><span class="line">          <span class="keyword">if</span> (promises.length === res.length) {</span><br><span class="line">            callback &amp;&amp; callback(res)</span><br><span class="line">          }</span><br><span class="line">        })</span><br><span class="line">      },</span><br><span class="line">      <span class="comment">// &#x670D;&#x52A1;&#x5668;&#x786E;&#x8BA4;&#x8BA2;&#x5355; &#x63A5;&#x53E3;&#x8BF7;&#x6C42; &#x9A8C;&#x8BC1;&#x8BA2;&#x5355;&#x5E76;&#x6D88;&#x8017;</span></span><br><span class="line">      verifyOrderRequest(data) {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> {</span><br><span class="line">          <span class="comment">// &#x5224;&#x65AD;&#x662F;&#x5426;&#x5DF2;&#x5B58;&#x5728; &#x5DF2;&#x5B58;&#x5728;&#x5219;&#x4E0D;&#x8BF7;&#x6C42;</span></span><br><span class="line">          <span class="keyword">const</span> storageList = uni.getStorageSync(<span class="string">&apos;pli&apos;</span>) || [];</span><br><span class="line">          <span class="keyword">const</span> curToken = data.purchaseToken</span><br><span class="line">          <span class="keyword">if</span> (storageList.includes(curToken)) {</span><br><span class="line">            uni.hideLoading()</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">          }</span><br><span class="line">          uni.setStorageSync(<span class="string">&apos;pli&apos;</span>, [...storageList, curToken])</span><br><span class="line">          <span class="comment">// &#x53D1;&#x8D77;&#x8BF7;&#x6C42;</span></span><br><span class="line">          uni.request({</span><br><span class="line">            url: <span class="string">&apos;/api/paygoogle&apos;</span>,</span><br><span class="line">            data, <span class="comment">// google &#x56DE;&#x8C03;&#x53C2;&#x6570;</span></span><br><span class="line">            method: <span class="string">&apos;POST&apos;</span>,</span><br><span class="line">            success: <span class="function"><span class="params">res</span> =&gt;</span> {</span><br><span class="line">              <span class="comment">// console.log(&apos;&#x670D;&#x52A1;&#x5668;&#x9A8C;&#x8BC1;verifyOrder: ===&gt;&apos;, res)</span></span><br><span class="line">              <span class="comment">// &#x6210;&#x529F; &#x670D;&#x52A1;&#x5668;&#x6D88;&#x8017;</span></span><br><span class="line">              <span class="keyword">if</span> (res.data.code === <span class="number">1</span>) {</span><br><span class="line">                resolve(data)</span><br><span class="line">              } <span class="keyword">else</span> {</span><br><span class="line">                <span class="comment">// &#x8BF7;&#x6C42;&#x51FA;&#x9519; &#x5220;&#x9664;&#x7F13;&#x5B58; &#x53EF;&#x91CD;&#x65B0;&#x8BF7;&#x6C42;</span></span><br><span class="line">                <span class="keyword">const</span> newStorageList = uni.getStorageSync(<span class="string">&apos;pli&apos;</span>) || []</span><br><span class="line">                <span class="keyword">const</span> index = newStorageList.findIndex(<span class="function"><span class="params">item</span> =&gt;</span> item === curToken)</span><br><span class="line">                <span class="keyword">if</span> (index) {</span><br><span class="line">                  newStorageList.splice(index, <span class="number">1</span>)</span><br><span class="line">                  uni.setStorageSync(<span class="string">&apos;pli&apos;</span>, newStorageList)</span><br><span class="line">                }</span><br><span class="line">                <span class="comment">// &#x9519;&#x8BEF;&#x7ED3;&#x679C;</span></span><br><span class="line">                <span class="keyword">if</span> (res.data.code === <span class="number">0</span>) {</span><br><span class="line">                  reject(res.data.msg)</span><br><span class="line">                } <span class="keyword">else</span> {</span><br><span class="line">                  reject(<span class="string">&apos;&#x670D;&#x52A1;&#x5668;&#x9A8C;&#x8BC1;&#x51FA;&#x9519;&#xFF0C;&#x8BF7;&#x8054;&#x7CFB;&#x7BA1;&#x7406;&#x5458;&apos;</span>)</span><br><span class="line">                }</span><br><span class="line">              }</span><br><span class="line">            },</span><br><span class="line">            fail: <span class="function">(<span class="params">data, code</span>) =&gt;</span> {</span><br><span class="line">              uni.showToast({</span><br><span class="line">                icon: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">                title: <span class="string">&apos;&#x670D;&#x52A1;&#x5668;&#x9A8C;&#x8BC1;&#x51FA;&#x9519;&#xFF0C;&#x8BF7;&#x8054;&#x7CFB;&#x7BA1;&#x7406;&#x5458;&apos;</span></span><br><span class="line">              })</span><br><span class="line">            }</span><br><span class="line">          });</span><br><span class="line">        })</span><br><span class="line">      },</span><br><span class="line">      <span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * &#x67E5;&#x8BE2;sku</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		doQuerySku() {</span><br><span class="line">			<span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">			googlePay.doQuerySku({</span><br><span class="line">					inapp: [<span class="keyword">this</span>.google_sku_id], <span class="comment">// GOOGLE&#x540E;&#x53F0;&#x914D;&#x7F6E;&#x7684;&#x5546;&#x54C1;ID</span></span><br><span class="line">				},</span><br><span class="line">				e =&gt; {</span><br><span class="line">					<span class="keyword">if</span> (e.code == <span class="number">200</span>) {</span><br><span class="line">						<span class="comment">// &#x67E5;&#x8BE2;&#x6210;&#x529F;</span></span><br><span class="line">						<span class="comment">// e.list; // &#x67E5;&#x8BE2;&#x7ED3;&#x679C;, array</span></span><br><span class="line">						<span class="comment">// console.log(&apos;&#x67E5;&#x8BE2;&#x6210;&#x529F;&#xFF1A; &apos;, e.list);</span></span><br><span class="line">						that.prdList = e.list;</span><br><span class="line">						that.createOrder()</span><br><span class="line">					} <span class="keyword">else</span> {</span><br><span class="line">						uni.hideLoading()</span><br><span class="line">						<span class="comment">// &#x67E5;&#x8BE2;&#x5931;&#x8D25;</span></span><br><span class="line">						that.showToast(<span class="string">&apos;&#x672A;&#x67E5;&#x8BE2;&#x5230;&#x5E94;&#x7528;&#x5185;&#x5546;&#x54C1;&apos;</span>);</span><br><span class="line">						<span class="built_in">console</span>.log(<span class="string">&apos;&#x672A;&#x67E5;&#x8BE2;&#x5230;&#x5E94;&#x7528;&#x5185;&#x5546;&#x54C1;&apos;</span>);</span><br><span class="line">						<span class="keyword">this</span>.isPaying = <span class="literal">false</span></span><br><span class="line">					}</span><br><span class="line">				}</span><br><span class="line">			);</span><br><span class="line">		},</span><br><span class="line">    <span class="comment">// &#x521B;&#x5EFA;&#x8BA2;&#x5355;</span></span><br><span class="line">		createOrder() {</span><br><span class="line">			uni.request({</span><br><span class="line">				url: <span class="string">&apos;/api/payGoogle/sumbitOrder&apos;</span>,</span><br><span class="line">				data: {</span><br><span class="line">					google_sku_id: <span class="keyword">this</span>.google_sku_id,</span><br><span class="line">				},</span><br><span class="line">				method: <span class="string">&apos;POST&apos;</span>,</span><br><span class="line">				success: <span class="function"><span class="params">res</span> =&gt;</span> {</span><br><span class="line">					uni.hideLoading()</span><br><span class="line">					<span class="keyword">if</span> (res.data.code === <span class="number">1</span>) {</span><br><span class="line">						<span class="keyword">const</span> orderSn = res.data.data.order_id</span><br><span class="line">						<span class="keyword">this</span>.doPayAll(orderSn)</span><br><span class="line">					} <span class="keyword">else</span> {</span><br><span class="line">						uni.showToast({</span><br><span class="line">							icon: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">							title: <span class="string">&apos;&#x521B;&#x5EFA;&#x8BA2;&#x5355;&#x5931;&#x8D25;&apos;</span></span><br><span class="line">						})</span><br><span class="line">						<span class="keyword">this</span>.isPaying = <span class="literal">false</span></span><br><span class="line">					}</span><br><span class="line">				},</span><br><span class="line">				fail: <span class="function">(<span class="params">data, code</span>) =&gt;</span> {</span><br><span class="line">					uni.hideLoading()</span><br><span class="line">					<span class="keyword">this</span>.isPaying = <span class="literal">false</span></span><br><span class="line">					uni.showToast({</span><br><span class="line">						icon: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">						title: <span class="string">&apos;&#x7F51;&#x7EDC;&#x51FA;&#x9519;&apos;</span></span><br><span class="line">					})</span><br><span class="line">				}</span><br><span class="line">			});</span><br><span class="line">		},</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * &#x53D1;&#x8D77;&#x652F;&#x4ED8;2</span></span><br><span class="line"><span class="comment">		 * &#x652F;&#x4ED8;&#x53C2;&#x6570;&#x4E3A;&#x67E5;&#x8BE2;sku&#x7ED3;&#x679C;&#x7684;&#x67D0;&#x4E00;&#x9879;</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		doPayAll(orderSn) {</span><br><span class="line">			<span class="keyword">const</span> that = <span class="keyword">this</span></span><br><span class="line">			<span class="keyword">if</span> (!orderSn) {</span><br><span class="line">				that.showToast(<span class="string">&apos;&#x672A;&#x521B;&#x5EFA;&#x8BA2;&#x5355;&#xFF0C;&#x8BF7;&#x91CD;&#x8BD5;&apos;</span>);</span><br><span class="line">				<span class="keyword">return</span></span><br><span class="line">			}</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">&apos;do pay function.&apos;</span>);</span><br><span class="line">			<span class="keyword">if</span> (that.prdList == <span class="literal">null</span> || that.prdList.length == <span class="number">0</span>) {</span><br><span class="line">				that.showToast(<span class="string">&apos;&#x4EA7;&#x54C1;&#x5217;&#x8868;&#x4E3A;&#x7A7A;&#xFF0C;&#x4E0D;&#x53EF;&#x652F;&#x4ED8;&apos;</span>);</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			}</span><br><span class="line">			googlePay.doPayAll({</span><br><span class="line">				productId: that.prdList[<span class="number">0</span>].productId,</span><br><span class="line">				offerToken: <span class="string">&apos;&apos;</span>, <span class="comment">//&#x53EF;&#x9009;&#xFF0C;&#x6298;&#x6263;token</span></span><br><span class="line">				accountId: orderSn, <span class="comment">// &#x53EF;&#x9009;&#xFF0C;&#x7528;&#x6237;Id</span></span><br><span class="line">				profileId: <span class="string">&quot;&quot;</span>, <span class="comment">// &#x53EF;&#x9009;&#xFF0C;&#x4E2A;&#x4EBA;&#x8D44;&#x6599;Id</span></span><br><span class="line">			}, e =&gt; {</span><br><span class="line">				<span class="comment">// console.log(&apos;&#x652F;&#x4ED8;&#x7ED3;&#x679C;&#xFF1A;&apos;, e);</span></span><br><span class="line">				<span class="keyword">if</span> (e.code == <span class="number">200</span>) {</span><br><span class="line">					<span class="comment">// &#x652F;&#x4ED8;&#x6210;&#x529F;</span></span><br><span class="line">					<span class="keyword">if</span> (e &amp;&amp; e.data) {</span><br><span class="line">						that.payList = e.data;</span><br><span class="line">						<span class="comment">// &#x670D;&#x52A1;&#x5668;&#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x8D2D;&#x4E70;&#x6210;&#x529F;</span></span><br><span class="line">						that.verifyOrder(<span class="function">(<span class="params">res</span>) =&gt;</span> {</span><br><span class="line">							<span class="keyword">const</span> hasCurrentSuccessProList = res.find(<span class="function"><span class="params">item</span> =&gt;</span> item.status ===</span><br><span class="line">								<span class="string">&apos;fulfilled&apos;</span> &amp;&amp; item.value.productId === that.curSkuSelected)</span><br><span class="line">							<span class="comment">// &#x670D;&#x52A1;&#x7AEF;&#x5DF2;&#x6210;&#x529F;&#x5904;&#x7406;&#x5E76;&#x6D88;&#x8D39;&#x8BA2;&#x5355;</span></span><br><span class="line">							<span class="keyword">if</span> (hasCurrentSuccessProList) {</span><br><span class="line">								<span class="comment">// console.log(&apos;&#x670D;&#x52A1;&#x7AEF;&#x5DF2;&#x6210;&#x529F;&#x5904;&#x7406;&#x5E76;&#x6D88;&#x8D39;&#x8BA2;&#x5355;:&apos;,hasCurrentSuccessProList, res)</span></span><br><span class="line">								uni.navigateBack()</span><br><span class="line">								setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">									that.showToast(<span class="string">&apos;&#x8D2D;&#x4E70;&#x6210;&#x529F;&apos;</span>) <span class="comment">// &#x6B63;&#x5F0F;&#x8D2D;&#x4E70;&#x6210;&#x529F;</span></span><br><span class="line">								}, <span class="number">2000</span>)</span><br><span class="line">							} <span class="keyword">else</span> {</span><br><span class="line">								<span class="keyword">const</span> fail = res.find(<span class="function"><span class="params">item</span> =&gt;</span> item.status === <span class="string">&apos;rejected&apos;</span>)</span><br><span class="line">								<span class="comment">// console.log(&apos;fail:&apos;, fail)</span></span><br><span class="line">								fail &amp;&amp; that.showToast(fail.reason)</span><br><span class="line">							}</span><br><span class="line">							<span class="keyword">this</span>.isPaying = <span class="literal">false</span></span><br><span class="line">						})</span><br><span class="line">					}</span><br><span class="line">				} <span class="keyword">else</span> {</span><br><span class="line">					<span class="keyword">if</span> (e.errorCode === <span class="number">7</span>) {</span><br><span class="line">						<span class="comment">// &#x6839;&#x636E;&#x5546;&#x54C1;id&#xFF0C;&#x67E5;&#x8BE2;&#x8BE5;&#x672A;&#x6D88;&#x8017;&#x5546;&#x54C1;&#x7684;&#x4FE1;&#x606F;</span></span><br><span class="line">						<span class="comment">// &#x670D;&#x52A1;&#x5668;&#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x8D2D;&#x4E70;&#x6210;&#x529F;</span></span><br><span class="line">						that.doQueryPurchases()</span><br><span class="line">					} <span class="keyword">else</span> <span class="keyword">if</span> (e.errorCode !== <span class="number">1</span>) {</span><br><span class="line">						<span class="built_in">console</span>.log(<span class="string">&apos;&#x652F;&#x4ED8;&#x5931;&#x8D25;&#xFF1A; &apos;</span>, e);</span><br><span class="line">						that.showToast(<span class="string">&quot;&#x652F;&#x4ED8;&#x5931;&#x8D25;: &quot;</span> + e.data);</span><br><span class="line">					}</span><br><span class="line">					<span class="keyword">this</span>.isPaying = <span class="literal">false</span></span><br><span class="line">				}</span><br><span class="line">			});</span><br><span class="line">		},</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="GOOGLE&#x652F;&#x4ED8;-H5&#x7AEF;"><a href="#GOOGLE&#x652F;&#x4ED8;-H5&#x7AEF;" class="headerlink" title="GOOGLE&#x652F;&#x4ED8; H5&#x7AEF;"></a>GOOGLE&#x652F;&#x4ED8; H5&#x7AEF;</h3><p>&#x9488;&#x5BF9;h5&#x7AEF;&#xFF0C;&#x6587;&#x6863;&#x5185;&#x6709;&#x5B8C;&#x6574;&#x4EE3;&#x7801;demo&#xFF0C;&#x53EF;&#x67E5;&#x770B;<a href="https://developers.google.com/pay/api/web/guides/resources/demos?hl=zh-cn" target="_blank" rel="noopener">&#x6B64;&#x5904;</a></p>
+<p>h5&#x7AEF;&#x652F;&#x4ED8;&#x9700;&#x8981;&#x7B2C;&#x4E09;&#x65B9;&#x7F51;&#x5173;&#x8FDB;&#x884C;&#x5904;&#x7406;google&#x8FD4;&#x56DE;&#x7684;&#x56DE;&#x8C03;&#x7ED3;&#x679C;&#xFF0C;&#x4E00;&#x822C;&#x4E2A;&#x4EBA;&#x516C;&#x53F8;&#x662F;&#x65E0;&#x6CD5;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x652F;&#x4ED8;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x76F4;&#x63A5;&#x96C6;&#x6210;&#x65B9;&#x5F0F;&#x4E00;&#x822C;&#x90FD;&#x4E0D;&#x9002;&#x7528;&#x3002;</p>
+<p>&#x67E5;&#x770B;google&#x652F;&#x6301;&#x7684;<a href="https://developers.google.com/pay/api/web/overview?hl=zh-cn" target="_blank" rel="noopener">&#x7B2C;&#x4E09;&#x65B9;&#x7F51;&#x5173;&#x5217;&#x8868;</a></p>
+<p>&#x5BF9;&#x4E8E;&#x9875;&#x9762;&#x6837;&#x5F0F;&#xFF0C;&#x8C37;&#x6B4C;&#x5BA1;&#x6838;&#x4E5F;&#x6709;&#x8981;&#x6C42;&#xFF0C;&#x9700;&#x8981;&#x6309;&#x7167; &#x96C6;&#x6210;&#x6838;&#x5BF9;&#x6E05;&#x5355; &#x8FDB;&#x884C;&#x64CD;&#x4F5C;</p>
+<p>&#x5F00;&#x53D1;&#x6D4B;&#x8BD5;&#x5B8C;&#x6210;&#xFF0C;&#x9700;&#x8981;&#x7533;&#x8BF7;&#x5BF9;Google Pay API&#x7684;&#x6B63;&#x5F0F;&#x8BBF;&#x95EE;&#x6743;&#x3002;<br><img src="/google-uniapp/google-uniapp_4.png" alt="google-uniapp"></p>
+<h4 id="h5&#x7AEF;&#x6D4B;&#x8BD5;"><a href="#h5&#x7AEF;&#x6D4B;&#x8BD5;" class="headerlink" title="h5&#x7AEF;&#x6D4B;&#x8BD5;"></a>h5&#x7AEF;&#x6D4B;&#x8BD5;</h4><p>&#x8BF7;&#x67E5;&#x770B;<a href="https://developers.google.com/pay/api/web/guides/resources/test-card-suite?hl=zh-cn" target="_blank" rel="noopener">&#x7533;&#x8BF7;&#x6D4B;&#x8BD5;&#x5361;&#x5957;&#x4EF6;</a>, &#x52A0;&#x5165;&#x201C;&#x7528;&#x6237;&#x7FA4;&#x7EC4;&#x201D;</p>
+<p><img src="/google-uniapp/google-uniapp_3.png" alt="google-uniapp"></p>
+<h3 id="app&#x7AEF;&#x8C03;&#x8BD5;"><a href="#app&#x7AEF;&#x8C03;&#x8BD5;" class="headerlink" title="app&#x7AEF;&#x8C03;&#x8BD5;"></a>app&#x7AEF;&#x8C03;&#x8BD5;</h3><p>Google Play Console &#x9875;&#x9762;&#xFF0C;&#x8BBE;&#x7F6E;&#x2014;&#x8BB8;&#x53EF;&#x6D4B;&#x8BD5;&#x9875;&#x9762;&#xFF0C;&#x6DFB;&#x52A0;&#x6D4B;&#x8BD5;&#x4EBA;&#x5458;&#x7684;&#x7535;&#x5B50;&#x90AE;&#x4EF6;&#xFF0C;&#x8BB8;&#x53EF;&#x76F8;&#x5E94;&#x8BF7;&#x8BBE;&#x7F6E;&#x4E3A; &#x201C;LICENSED&#x201D;</p>
+<h3 id="&#x670D;&#x52A1;&#x7AEF;&#x6743;&#x9650;&#x6821;&#x9A8C;"><a href="#&#x670D;&#x52A1;&#x7AEF;&#x6743;&#x9650;&#x6821;&#x9A8C;" class="headerlink" title="&#x670D;&#x52A1;&#x7AEF;&#x6743;&#x9650;&#x6821;&#x9A8C;"></a>&#x670D;&#x52A1;&#x7AEF;&#x6743;&#x9650;&#x6821;&#x9A8C;</h3><p>&#x521B;&#x5EFA;&#x670D;&#x52A1;&#x53F7;&#x5E76;&#x4E0E;&#x9879;&#x76EE;&#x5173;&#x8054;&#xFF0C;&#x901A;&#x8FC7;&#x670D;&#x52A1;&#x53F7;&#x5BC6;&#x94A5;&#x8FDB;&#x884C;&#x6743;&#x9650;&#x6821;&#x9A8C;</p>
+<p>&#x53C2;&#x8003;<a href="https://www.cuiwei.net/p/1370199631" target="_blank" rel="noopener">&#x6B64;&#x6587;&#x7AE0;</a>&#x8FDB;&#x884C;&#x914D;&#x7F6E;<br>&#x53C2;&#x8003;<a href="https://developers.google.com/android-publisher/getting_started?hl=zh-cn" target="_blank" rel="noopener">&#x6B64;&#x6587;&#x6863;</a></p>
+<p>&#x8BF7;&#x6CE8;&#x610F; OAuth&#x540C;&#x610F;&#x5C4F;&#x5E55;&#x4E2D;&#xFF0C;&#x5728;&#x8303;&#x56F4;&#xFF08;scope&#xFF09;&#x9009;&#x9879;&#xFF0C;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x5BF9;&#x5E94;&#x7684;API&#x6743;&#x9650;</p>
+<p><img src="/google-uniapp/google-uniapp_5.png" alt="google-uniapp"></p>
+<h3 id="google-play-&#x5185;&#x90E8;&#x5E94;&#x7528;&#x5206;&#x4EAB;&#x8BBE;&#x7F6E;"><a href="#google-play-&#x5185;&#x90E8;&#x5E94;&#x7528;&#x5206;&#x4EAB;&#x8BBE;&#x7F6E;" class="headerlink" title="google play &#x5185;&#x90E8;&#x5E94;&#x7528;&#x5206;&#x4EAB;&#x8BBE;&#x7F6E;"></a>google play &#x5185;&#x90E8;&#x5E94;&#x7528;&#x5206;&#x4EAB;&#x8BBE;&#x7F6E;</h3><p><img src="/google-uniapp/google-uniapp_6.jpg" alt="google-uniapp"></p>
+<h3 id="&#x5176;&#x4ED6;&#x76F8;&#x5173;"><a href="#&#x5176;&#x4ED6;&#x76F8;&#x5173;" class="headerlink" title="&#x5176;&#x4ED6;&#x76F8;&#x5173;"></a>&#x5176;&#x4ED6;&#x76F8;&#x5173;</h3><blockquote>
+<p>&#x4FEE;&#x6539;&#x76EE;&#x6807; API &#x7EA7;&#x522B;</p>
+<blockquote>
+<p>manifest.json&#x6E90;&#x7801;/&#x201C;app-plus&#x201D;/&#x201C;distribute&#x201D;/&#x201C;android&#x201D;/<br>&#x201C;targetSdkVersion&#x201D;: 33</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>uniapp &#x4E91;&#x6253;&#x5305;&#xFF0C;&#x9700;&#x8981;&#x52FE;&#x9009; Google Play(AAB)&#x9009;&#x9879;&#xFF0C;&#x6253;&#x5305;&#x751F;&#x6210;.aab&#x683C;&#x5F0F;&#x6587;&#x4EF6;&#xFF0C;&#x5C06;&#x6B64;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x5230; Google play console&#x540E;&#x53F0;&#x4E2D;</p>
+</blockquote>
+
+    </div>
+
+    <div>
+      
+      <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+  
+</div>
+
+      
+    </div>
+    
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Ringo 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="Ringo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Ringo</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ringo.org.cn/google-uniapp/" title="Google授权登录及Android支付(uniapp-app)">https://ringo.org.cn/google-uniapp/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/uniapp/" rel="tag"><i class="fa fa-tag"></i> uniapp</a>
+            
+              <a href="/tags/google/" rel="tag"><i class="fa fa-tag"></i> google</a>
+            
+              <a href="/tags/vue/" rel="tag"><i class="fa fa-tag"></i> vue</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/vue-plugin-global/" rel="next" title="vue自定义全局登录插件">
+                  <i class="fa fa-chevron-left"></i> vue自定义全局登录插件
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#谷歌授权登录"><span class="nav-number">1.</span> <span class="nav-text">谷歌授权登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#google支付app端拉起"><span class="nav-number">2.</span> <span class="nav-text">google支付app端拉起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GOOGLE支付-H5端"><span class="nav-number">3.</span> <span class="nav-text">GOOGLE支付 H5端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#h5端测试"><span class="nav-number">3.1.</span> <span class="nav-text">h5端测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app端调试"><span class="nav-number">4.</span> <span class="nav-text">app端调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端权限校验"><span class="nav-number">5.</span> <span class="nav-text">服务端权限校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#google-play-内部应用分享设置"><span class="nav-number">6.</span> <span class="nav-text">google play 内部应用分享设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他相关"><span class="nav-number">7.</span> <span class="nav-text">其他相关</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/porter-avatar.png"
+      alt="Ringo">
+  <p class="site-author-name" itemprop="name">Ringo</p>
+  <div class="site-description" itemprop="description">体验人生, 享受生活</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:suzheng91@163.com" title="E-Mail &rarr; mailto:suzheng91@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ringo</span>
+  <br/>
+  <a href="http://beian.miit.gov.cn" target="_blank">鄂ICP备18019135号-1</a>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/lib/zclip/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
+
+
+<script>
+NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'TaUTweqTv6FAMCLJEiD76XtX-gzGzoHsz',
+    appKey: 'eT6LUFgRFRuMsy8LWbXj1UPD',
+    placeholder: '填写上邮箱可以接收到我的回复邮件哦!  (｡♥ᴗ♥｡) ',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/assets/shizuku.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

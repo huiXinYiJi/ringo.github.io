@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/porter-32x32.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/porter-16x16.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;#x95EE;&amp;#x9898;&amp;#x573A;&amp;#x666F;&amp;#xFF1A;Ueditor&amp;#x5728;vue&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x7684;&amp;#x4F7F;&amp;#x7528;, &amp;#x9700;&amp;#x8981;&amp;#x591A;&amp;#x8BED;&amp;#x8A00;&amp;#x5207;&amp;#x6362;&amp;#x663E;&amp;#x793A;&amp;#x5BF9;&amp;#x5E94;&amp;#x8">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ueditor + vue-ueditor-wrap 多语言切换及自定义上传图片按钮">
+<meta property="og:url" content="https://ringo.org.cn/ueditor-vue/index.html">
+<meta property="og:site_name" content="Ringo">
+<meta property="og:description" content="&amp;#x95EE;&amp;#x9898;&amp;#x573A;&amp;#x666F;&amp;#xFF1A;Ueditor&amp;#x5728;vue&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x7684;&amp;#x4F7F;&amp;#x7528;, &amp;#x9700;&amp;#x8981;&amp;#x591A;&amp;#x8BED;&amp;#x8A00;&amp;#x5207;&amp;#x6362;&amp;#x663E;&amp;#x793A;&amp;#x5BF9;&amp;#x5E94;&amp;#x8">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ringo.org.cn/ueditor-vue/ueditor-vue.png">
+<meta property="og:updated_time" content="2023-08-28T02:31:21.779Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ueditor + vue-ueditor-wrap 多语言切换及自定义上传图片按钮">
+<meta name="twitter:description" content="&amp;#x95EE;&amp;#x9898;&amp;#x573A;&amp;#x666F;&amp;#xFF1A;Ueditor&amp;#x5728;vue&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x7684;&amp;#x4F7F;&amp;#x7528;, &amp;#x9700;&amp;#x8981;&amp;#x591A;&amp;#x8BED;&amp;#x8A00;&amp;#x5207;&amp;#x6362;&amp;#x663E;&amp;#x793A;&amp;#x5BF9;&amp;#x5E94;&amp;#x8">
+<meta name="twitter:image" content="https://ringo.org.cn/ueditor-vue/ueditor-vue.png">
+  <link rel="canonical" href="https://ringo.org.cn/ueditor-vue/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Ueditor + vue-ueditor-wrap 多语言切换及自定义上传图片按钮 | Ringo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ringo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-lab">
+      
+    
+
+    <a href="/lab/" rel="section"><i class="menu-item-icon fa fa-fw fa-balance-scale"></i> <br>lab</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th-list"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ringo.org.cn/ueditor-vue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ringo">
+      <meta itemprop="description" content="体验人生, 享受生活">
+      <meta itemprop="image" content="/images/porter-avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ringo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Ueditor + vue-ueditor-wrap 多语言切换及自定义上传图片按钮
+
+          
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-13 16:34:21" itemprop="dateCreated datePublished" datetime="2020-05-13T16:34:21+08:00">2020-05-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-28 10:31:21" itemprop="dateModified" datetime="2023-08-28T10:31:21+08:00">2023-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/ueditor-vue/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/ueditor-vue/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+        <p><strong>&#x95EE;&#x9898;&#x573A;&#x666F;&#xFF1A;</strong><br>Ueditor&#x5728;vue&#x9879;&#x76EE;&#x4E2D;&#x7684;&#x4F7F;&#x7528;, &#x9700;&#x8981;&#x591A;&#x8BED;&#x8A00;&#x5207;&#x6362;&#x663E;&#x793A;&#x5BF9;&#x5E94;&#x8BED;&#x8A00;&#x63D0;&#x793A;, &#x4E0A;&#x4F20;&#x56FE;&#x7247;&#x529F;&#x80FD;&#x9700;&#x8981;&#x81EA;&#x5B9A;&#x4E49;.</p>
+<blockquote>
+<p>&#x7B2C;&#x4E00;&#x6B65;: &#x4FEE;&#x6539;Ueditor&#x6E90;&#x7801; &#x5E76;&#x6253;&#x5305;&#x6210;&#x751F;&#x4EA7;&#x6587;&#x4EF6;<br>&#x7B2C;&#x4E8C;&#x6B65;: &#x4F7F;&#x7528;vue-ueditor-wrap&#x5F15;&#x5165;Ueditor<br>&#x7B2C;&#x4E09;&#x6B65;: &#x5728;vue&#x7EC4;&#x4EF6;&#x4E2D;&#x7F16;&#x5199;&#x81EA;&#x5B9A;&#x4E49;&#x4E0A;&#x4F20;&#x56FE;&#x7247;&#x6309;&#x94AE;</p>
+</blockquote>
+<a id="more"></a>
+
+<p><strong>&#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF1A;</strong></p>
+<h5 id="&#x2460;&#x4FEE;&#x6539;Ueditor&#x6E90;&#x7801;-&#x5E76;&#x6253;&#x5305;&#x6210;&#x751F;&#x4EA7;&#x6587;&#x4EF6;"><a href="#&#x2460;&#x4FEE;&#x6539;Ueditor&#x6E90;&#x7801;-&#x5E76;&#x6253;&#x5305;&#x6210;&#x751F;&#x4EA7;&#x6587;&#x4EF6;" class="headerlink" title="&#x2460;&#x4FEE;&#x6539;Ueditor&#x6E90;&#x7801; &#x5E76;&#x6253;&#x5305;&#x6210;&#x751F;&#x4EA7;&#x6587;&#x4EF6;"></a>&#x2460;&#x4FEE;&#x6539;Ueditor&#x6E90;&#x7801; &#x5E76;&#x6253;&#x5305;&#x6210;&#x751F;&#x4EA7;&#x6587;&#x4EF6;</h5><p><strong>&#x4FEE;&#x6539;Ueditor&#x6E90;&#x7801;</strong><br>&#x4E0B;&#x8F7D;Ueditor&#x5F00;&#x53D1;&#x7248;&#x5B8C;&#x6574;&#x6E90;&#x7801;: <a href="http://ueditor.baidu.com/website/download.html#ueditor" target="_blank" rel="noopener">&#x5730;&#x5740;</a><br>&#x5B89;&#x88C5;node &#x4EE5;&#x53CA; &#x5168;&#x5C40;grunt (npm install -g grunt-cli)<br>&#x5728;&#x4E0B;&#x8F7D;&#x597D;&#x7684;Ueditor&#x6839;&#x76EE;&#x5F55;&#x5185;, &#x6267;&#x884C; npm install&#x5B89;&#x88C5;&#x4F9D;&#x8D56;<br>&#x5728;&#x63A5;&#x4E0B;&#x6765;&#x4FEE;&#x6539;&#x5B8C;&#x6E90;&#x7801;&#x540E;, &#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;&#x6E90;&#x7801;&#x6253;&#x5305;: Ueditor&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x6267;&#x884C; grunt&#x547D;&#x4EE4;</p>
+<p>&#x4FEE;&#x6539;&#x6E90;&#x7801;:<br>_src/core/Editor.js &#x641C;&#x7D22; me.loadServerConfig()&#x5B9A;&#x4F4D;, &#x4FEE;&#x6539;&#x83B7;&#x53D6;&#x8BED;&#x8A00;&#x7684;&#x65B9;&#x5F0F;, &#x5982;&#x679C;&#x5F53;&#x524D;&#x6CA1;&#x6709;&#x8BED;&#x8A00;, &#x5219;&#x83B7;&#x53D6;&#x8BED;&#x8A00;&#x6587;&#x4EF6;&#x5E76;&#x52A0;&#x8F7D;, &#x82E5;&#x6709;&#x8BED;&#x8A00;&#x4E14;&#x6709;&#x6587;&#x4EF6;, &#x5219;&#x8BBE;&#x7F6E;&#x5F53;&#x524D;ueditor&#x8BED;&#x8A00;, checkCurLang&#x65B9;&#x6CD5;&#x4F1A;&#x83B7;&#x53D6;&#x6240;&#x6709;&#x8BED;&#x8A00;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;, &#x4E0D;&#x7528;&#x8FD9;&#x4E2A;, &#x76F4;&#x63A5;&#x8BBE;&#x7F6E;&#x6211;&#x4EEC;&#x8D4B;&#x503C;&#x7684;&#x8BED;&#x8A00;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* &#x5C1D;&#x8BD5;&#x5F02;&#x6B65;&#x52A0;&#x8F7D;&#x540E;&#x53F0;&#x914D;&#x7F6E; */</span></span><br><span class="line">me.loadServerConfig();</span><br><span class="line"></span><br><span class="line"><span class="comment">// if(!utils.isEmptyObject(UE.I18N)){</span></span><br><span class="line"><span class="comment">//     //&#x4FEE;&#x6539;&#x9ED8;&#x8BA4;&#x7684;&#x8BED;&#x8A00;&#x7C7B;&#x578B;</span></span><br><span class="line"><span class="comment">//     me.options.lang = checkCurLang(UE.I18N);</span></span><br><span class="line"><span class="comment">//     UE.plugin.load(me);</span></span><br><span class="line"><span class="comment">//     langReadied(me);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// }else{</span></span><br><span class="line"><span class="comment">//     utils.loadFile(document, {</span></span><br><span class="line"><span class="comment">//         src: me.options.langPath + me.options.lang + &quot;/&quot; + me.options.lang + &quot;.js&quot;,</span></span><br><span class="line"><span class="comment">//         tag: &quot;script&quot;,</span></span><br><span class="line"><span class="comment">//         type: &quot;text/javascript&quot;,</span></span><br><span class="line"><span class="comment">//         defer: &quot;defer&quot;</span></span><br><span class="line"><span class="comment">//     }, function () {</span></span><br><span class="line"><span class="comment">//         UE.plugin.load(me);</span></span><br><span class="line"><span class="comment">//         langReadied(me);</span></span><br><span class="line"><span class="comment">//     });</span></span><br><span class="line"><span class="comment">// }</span></span><br><span class="line"><span class="comment">// &#x81EA;&#x4E3B;&#x4FEE;&#x6539;</span></span><br><span class="line"><span class="keyword">if</span> (UE.I18N[me.options.lang] === <span class="literal">undefined</span>) {</span><br><span class="line">    utils.loadFile(<span class="built_in">document</span>, {</span><br><span class="line">        src: me.options.langPath + me.options.lang + <span class="string">&quot;/&quot;</span> + me.options.lang + <span class="string">&quot;.js&quot;</span>,</span><br><span class="line">        tag: <span class="string">&quot;script&quot;</span>,</span><br><span class="line">        type: <span class="string">&quot;text/javascript&quot;</span>,</span><br><span class="line">        defer: <span class="string">&quot;defer&quot;</span></span><br><span class="line">    }, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">        UE.plugin.load(me);</span><br><span class="line">        langReadied(me);</span><br><span class="line">    });</span><br><span class="line">} <span class="keyword">else</span> {</span><br><span class="line">    <span class="comment">//&#x4FEE;&#x6539;&#x9ED8;&#x8BA4;&#x7684;&#x8BED;&#x8A00;&#x7C7B;&#x578B;</span></span><br><span class="line">    <span class="comment">// console.log(me.options.lang, checkCurLang(UE.I18N))</span></span><br><span class="line">    <span class="comment">// me.options.lang = checkCurLang(UE.I18N);</span></span><br><span class="line">    UE.plugin.load(me);</span><br><span class="line">    langReadied(me);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">UE.instants[<span class="string">&apos;ueditorInstant&apos;</span> + me.uid] = me;</span><br></pre></td></tr></table></figure>
+
+<p><strong>&#x6253;&#x5305;&#x6E90;&#x7801;&#x6587;&#x4EF6;</strong><br>&#x5728;Ueditor&#x6587;&#x4EF6;&#x5939;&#x6839;&#x76EE;&#x5F55;&#x4E0B;, &#x547D;&#x4EE4;&#x884C;&#x8F93;&#x5165; grunt &#x6267;&#x884C;<br>&#x6253;&#x5305;&#x540E;&#x7684;&#x751F;&#x4EA7;&#x6587;&#x4EF6;&#x5728;&#x6839;&#x76EE;&#x5F55;&#x4E0B;dist&#x5185;<br>&#x9ED8;&#x8BA4;&#x6253;&#x5305;&#x7684;php&#x540E;&#x7AEF;&#x4EE3;&#x7801;&#x76F8;&#x5173;&#x6587;&#x4EF6;<br>&#x9700;&#x8981;&#x6253;&#x5305;&#x643A;&#x5E26;&#x5176;&#x4ED6;&#x540E;&#x7AEF;&#x8BED;&#x8A00;&#x7684;&#x4EE3;&#x7801;, &#x547D;&#x4EE4;&#x884C;&#x8F93;&#x5165; grunt &#x2013;server=jsp&#x6267;&#x884C;&#x5373;&#x53EF;</p>
+<h5 id="vue&#x4E2D;&#x4F7F;&#x7528;"><a href="#vue&#x4E2D;&#x4F7F;&#x7528;" class="headerlink" title="vue&#x4E2D;&#x4F7F;&#x7528;"></a>vue&#x4E2D;&#x4F7F;&#x7528;</h5><p>&#x5C06;&#x6253;&#x5305;&#x751F;&#x6210;&#x7684;&#x6587;&#x4EF6;&#x5939;&#x653E;&#x5165;vue-cli&#x9879;&#x76EE;public&#x5185;<br><img src="/ueditor-vue/ueditor-vue.png" alt="ueditor-vue"><br>ueditor/lang&#x4E2D;&#x4EFF;&#x7167;zh-cn&#x6587;&#x4EF6;&#x7F16;&#x5199;&#x5176;&#x4ED6;&#x6240;&#x9700;&#x8BED;&#x8A00;&#x7684;&#x6587;&#x4EF6;, &#x5BF9;&#x5E94;&#x8BED;&#x79CD;&#x6587;&#x4EF6;&#x5939;&#x540D;, js&#x6587;&#x4EF6;&#x540D;, js&#x5185;UE.I18N[&#x2018;zh-cn&#x2019;]&#x90FD;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x6210;&#x5BF9;&#x5E94;&#x8BED;&#x79CD;code</p>
+<p>&#x9879;&#x76EE;&#x4E2D;&#x5B89;&#x88C5;vue-ueditor-wrap&#x4F9D;&#x8D56;(npm install vue-ueditor-wrap)<br>&#x521B;&#x5EFA;&#x7EC4;&#x4EF6;ue.vue</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;vue-ueditor-wrap</span><br><span class="line">      ref=<span class="string">&quot;editor&quot;</span></span><br><span class="line">      v-model=<span class="string">&quot;editHtml&quot;</span></span><br><span class="line">      @ready=<span class="string">&quot;ready&quot;</span></span><br><span class="line">      :config=<span class="string">&quot;config&quot;</span></span><br><span class="line">      :destroy=<span class="string">&quot;true&quot;</span></span><br><span class="line">      @beforeInit=<span class="string">&quot;addCustomButtom&quot;</span> style=<span class="string">&quot;line-height: 1&quot;</span>&gt;</span><br><span class="line">    &lt;<span class="regexp">/vue-ueditor-wrap&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">import VueUeditorWrap from &apos;vue-ueditor-wrap&apos;</span></span><br><span class="line"><span class="regexp">import { mapGetters } from &apos;vuex&apos;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const URL = process.env.NODE_ENV === &apos;production&apos; ? &apos;./u</span>editor/<span class="string">&apos; : &apos;</span>/ueditor/<span class="string">&apos;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default {</span></span><br><span class="line"><span class="string">  name: &apos;</span>UE<span class="string">&apos;,</span></span><br><span class="line"><span class="string">  components: {</span></span><br><span class="line"><span class="string">    VueUeditorWrap</span></span><br><span class="line"><span class="string">  },</span></span><br><span class="line"><span class="string">  props: {</span></span><br><span class="line"><span class="string">    value: {}</span></span><br><span class="line"><span class="string">  },</span></span><br><span class="line"><span class="string">  data () {</span></span><br><span class="line"><span class="string">    return {</span></span><br><span class="line"><span class="string">      editor: null,</span></span><br><span class="line"><span class="string">      editHtml: &apos;</span><span class="string">&apos;,</span></span><br><span class="line"><span class="string">      // &#x914D;&#x7F6E;</span></span><br><span class="line"><span class="string">      config: {</span></span><br><span class="line"><span class="string">        // &#x7F16;&#x8F91;&#x5668;&#x4E0D;&#x81EA;&#x52A8;&#x88AB;&#x5185;&#x5BB9;&#x6491;&#x9AD8;</span></span><br><span class="line"><span class="string">        autoHeightEnabled: false,</span></span><br><span class="line"><span class="string">        // &#x521D;&#x59CB;&#x5BB9;&#x5668;&#x9AD8;&#x5EA6;</span></span><br><span class="line"><span class="string">        initialFrameHeight: 115,</span></span><br><span class="line"><span class="string">        // &#x521D;&#x59CB;&#x5BB9;&#x5668;&#x5BBD;&#x5EA6;</span></span><br><span class="line"><span class="string">        initialFrameWidth: &apos;</span><span class="number">100</span>%<span class="string">&apos;,</span></span><br><span class="line"><span class="string">        // &#x4E0A;&#x4F20;&#x6587;&#x4EF6;&#x63A5;&#x53E3;&#xFF08;&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#x662F;&#x6211;&#x4E3A;&#x4E86;&#x65B9;&#x4FBF;&#x5404;&#x4F4D;&#x4F53;&#x9A8C;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x529F;&#x80FD;&#x642D;&#x5EFA;&#x7684;&#x4E34;&#x65F6;&#x63A5;&#x53E3;&#xFF0C;&#x8BF7;&#x52FF;&#x5728;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4F7F;&#x7528;&#xFF01;&#xFF01;&#xFF01;&#xFF09;</span></span><br><span class="line"><span class="string">        serverUrl: &apos;</span>http:<span class="comment">//35.201.165.105:8000/controller.php&apos;,</span></span><br><span class="line">        UEDITOR_HOME_URL: URL,</span><br><span class="line">        enableAutoSave: <span class="literal">false</span>,</span><br><span class="line">        elementPathEnabled: <span class="literal">false</span>,</span><br><span class="line">        wordCount: <span class="literal">false</span>,</span><br><span class="line">        <span class="comment">// &#x83DC;&#x5355;&#x6309;&#x94AE;&#x9879; &apos;simpleupload&apos; &#x5355;&#x56FE;&#x7247;&#x4E0A;&#x4F20;&#x91CD;&#x5199;&apos;fullscreen&apos;,</span></span><br><span class="line">        toolbars: [</span><br><span class="line">          [<span class="string">&apos;source&apos;</span>, <span class="string">&apos;undo&apos;</span>, <span class="string">&apos;redo&apos;</span>, <span class="string">&apos;bold&apos;</span>, <span class="string">&apos;italic&apos;</span>, <span class="string">&apos;underline&apos;</span>, <span class="string">&apos;fontborder&apos;</span>, <span class="string">&apos;strikethrough&apos;</span>,</span><br><span class="line">            <span class="string">&apos;removeformat&apos;</span>, <span class="string">&apos;forecolor&apos;</span>, <span class="string">&apos;backcolor&apos;</span>, <span class="string">&apos;selectall&apos;</span>, <span class="string">&apos;link&apos;</span></span><br><span class="line">          ]</span><br><span class="line">        ],</span><br><span class="line">        langPath: URL + <span class="string">&apos;lang/&apos;</span>,</span><br><span class="line">        imageScaleEnabled: <span class="literal">false</span>,</span><br><span class="line">        listDefaultPaddingLeft: <span class="string">&apos;10&apos;</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    ...mapGetters([</span><br><span class="line">      <span class="string">&apos;language&apos;</span></span><br><span class="line">    ]),</span><br><span class="line">    lang () {</span><br><span class="line">      <span class="keyword">return</span> localStorage.getItem(<span class="string">&apos;localeLanguage&apos;</span>) || <span class="string">&apos;en-US&apos;</span></span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  watch: {</span><br><span class="line">    value: {</span><br><span class="line">      handler (val) {</span><br><span class="line">        <span class="keyword">this</span>.editHtml = val</span><br><span class="line">      },</span><br><span class="line">      deep: <span class="literal">true</span>,</span><br><span class="line">      immediate: <span class="literal">true</span></span><br><span class="line">    },</span><br><span class="line">    editHtml: {</span><br><span class="line">      handler (val) {</span><br><span class="line">        <span class="keyword">this</span>.$emit(<span class="string">&apos;input&apos;</span>, val)</span><br><span class="line">      },</span><br><span class="line">      deep: <span class="literal">true</span></span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  created () {</span><br><span class="line">    <span class="keyword">this</span>.config.lang = <span class="keyword">this</span>.lang</span><br><span class="line">  },</span><br><span class="line">  methods: {</span><br><span class="line">    <span class="comment">// &#x521B;&#x5EFA;&#x5B9E;&#x4F8B;</span></span><br><span class="line">    ready (editorInstance) {</span><br><span class="line">      <span class="keyword">this</span>.editor = editorInstance</span><br><span class="line">    },</span><br><span class="line">    <span class="comment">// &#x521B;&#x5EFA;&#x5B9E;&#x4F8B;&#x524D; &#x81EA;&#x5B9A;&#x4E49;&#x4E0A;&#x4F20;&#x56FE;&#x7247;&#x6309;&#x94AE;</span></span><br><span class="line">    addCustomButtom (editorId) {</span><br><span class="line">      <span class="keyword">const</span> _this = <span class="keyword">this</span></span><br><span class="line">      <span class="keyword">this</span>.config.lang = <span class="keyword">this</span>.lang</span><br><span class="line">      <span class="built_in">window</span>.UE.registerUI(<span class="string">&apos;test-button&apos;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">editor, uiName</span>) </span>{</span><br><span class="line">        <span class="comment">// &#x6CE8;&#x518C;&#x6309;&#x94AE;&#x6267;&#x884C;&#x65F6;&#x7684; command &#x547D;&#x4EE4;&#xFF0C;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x9ED8;&#x8BA4;&#x5C31;&#x4F1A;&#x5E26;&#x6709;&#x56DE;&#x9000;&#x64CD;&#x4F5C;</span></span><br><span class="line">        editor.registerCommand(uiName, {</span><br><span class="line">          execCommand: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">            _this.axiosRequestImgUp(editor)</span><br><span class="line">          }</span><br><span class="line">        })</span><br><span class="line"></span><br><span class="line">        <span class="comment">// &#x521B;&#x5EFA;&#x4E00;&#x4E2A; button</span></span><br><span class="line">        <span class="keyword">var</span> btn = <span class="keyword">new</span> <span class="built_in">window</span>.UE.ui.Button({</span><br><span class="line">          <span class="comment">// &#x6309;&#x94AE;&#x7684;&#x540D;&#x5B57;</span></span><br><span class="line">          name: uiName,</span><br><span class="line">          <span class="comment">// &#x63D0;&#x793A;</span></span><br><span class="line">          title: _this.$t(<span class="string">&apos;uploadImg&apos;</span>),</span><br><span class="line">          <span class="comment">// &#x9700;&#x8981;&#x6DFB;&#x52A0;&#x7684;&#x989D;&#x5916;&#x6837;&#x5F0F;&#xFF0C;&#x53EF;&#x6307;&#x5B9A; icon &#x56FE;&#x6807;&#xFF0C;&#x56FE;&#x6807;&#x8DEF;&#x5F84;&#x53C2;&#x8003;&#x5E38;&#x89C1;&#x95EE;&#x9898; 2</span></span><br><span class="line">          cssRules: <span class="string">`background-image: url(&apos;./ueditor/themes/default/images/icons.png&apos;) !important;background-position: -380px 0px;`</span>,</span><br><span class="line">          <span class="comment">// &#x70B9;&#x51FB;&#x65F6;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;</span></span><br><span class="line">          onclick: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">            <span class="comment">// &#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x4E0D;&#x7528;&#x6267;&#x884C;&#x547D;&#x4EE4;&#xFF0C;&#x505A;&#x4F60;&#x81EA;&#x5DF1;&#x7684;&#x64CD;&#x4F5C;&#x4E5F;&#x53EF;</span></span><br><span class="line">            editor.execCommand(uiName)</span><br><span class="line">          }</span><br><span class="line">        })</span><br><span class="line"></span><br><span class="line">        <span class="comment">// &#x5F53;&#x70B9;&#x5230;&#x7F16;&#x8F91;&#x5185;&#x5BB9;&#x4E0A;&#x65F6;&#xFF0C;&#x6309;&#x94AE;&#x8981;&#x505A;&#x7684;&#x72B6;&#x6001;&#x53CD;&#x5C04;</span></span><br><span class="line">        editor.addListener(<span class="string">&apos;selectionchange&apos;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">          <span class="keyword">var</span> state = editor.queryCommandState(uiName)</span><br><span class="line">          <span class="keyword">if</span> (state === <span class="number">-1</span>) {</span><br><span class="line">            btn.setDisabled(<span class="literal">true</span>)</span><br><span class="line">            btn.setChecked(<span class="literal">false</span>)</span><br><span class="line">          } <span class="keyword">else</span> {</span><br><span class="line">            btn.setDisabled(<span class="literal">false</span>)</span><br><span class="line">            btn.setChecked(state)</span><br><span class="line">          }</span><br><span class="line">        })</span><br><span class="line">        <span class="comment">// &#x56E0;&#x4E3A;&#x4F60;&#x662F;&#x6DFB;&#x52A0; button&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x8FD9;&#x4E2A; button</span></span><br><span class="line">        <span class="keyword">return</span> btn</span><br><span class="line">      }, <span class="number">-1</span> <span class="comment">/* &#x6307;&#x5B9A;&#x6DFB;&#x52A0;&#x5230;&#x5DE5;&#x5177;&#x680F;&#x4E0A;&#x7684;&#x54EA;&#x4E2A;&#x4F4D;&#x7F6E;&#xFF0C;-1&#x4E3A;&#x5012;&#x6570;&#x7B2C;&#x4E8C;&#x4F4D; */</span>, editorId <span class="comment">/* &#x6307;&#x5B9A;&#x8FD9;&#x4E2A; UI &#x662F;&#x54EA;&#x4E2A;&#x7F16;&#x8F91;&#x5668;&#x5B9E;&#x4F8B;&#x4E0A;&#x7684;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;&#x9875;&#x9762;&#x4E0A;&#x6240;&#x6709;&#x7684;&#x7F16;&#x8F91;&#x5668;&#x90FD;&#x4F1A;&#x6DFB;&#x52A0;&#x8FD9;&#x4E2A;&#x6309;&#x94AE; */</span>)</span><br><span class="line">    },</span><br><span class="line">    <span class="comment">// &#x4E0A;&#x4F20;&#x56FE;&#x7247;&#x63A5;&#x53E3;</span></span><br><span class="line">    axiosRequestImgUp (editor) {</span><br><span class="line">      <span class="keyword">const</span> _this = <span class="keyword">this</span></span><br><span class="line">      <span class="keyword">var</span> input = <span class="built_in">document</span>.createElement(<span class="string">&apos;input&apos;</span>)</span><br><span class="line">      input.type = <span class="string">&apos;file&apos;</span></span><br><span class="line">      input.style.display = <span class="string">&apos;none&apos;</span></span><br><span class="line">      input.accept = <span class="string">&apos;.png, .jpg, .bmp&apos;</span></span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(input)</span><br><span class="line">      input.click()</span><br><span class="line">      input.addEventListener(<span class="string">&apos;change&apos;</span>, (e) =&gt; {</span><br><span class="line">        <span class="comment">// &#x5229;&#x7528; AJAX &#x4E0A;&#x4F20;&#xFF0C;&#x4E0A;&#x4F20;&#x6210;&#x529F;&#x4E4B;&#x540E;&#x9500;&#x6BC1; DOM</span></span><br><span class="line">        <span class="keyword">const</span> file = e.target.files[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">const</span> size = file.size</span><br><span class="line">        <span class="keyword">const</span> isLt2M = size / <span class="number">1024</span> / <span class="number">1024</span> &lt; <span class="number">2</span></span><br><span class="line">        <span class="keyword">const</span> isZero = size &gt; <span class="number">0</span></span><br><span class="line">        <span class="keyword">const</span> fileType = file.type</span><br><span class="line">        <span class="keyword">if</span> (!isZero || !isLt2M || fileType.indexOf(<span class="string">&apos;image&apos;</span>) === <span class="number">-1</span>) {</span><br><span class="line">          _this.$yrtoast(<span class="keyword">this</span>.$t(<span class="string">&apos;fileaccept&apos;</span>), <span class="number">2000</span>, <span class="string">&apos;error&apos;</span>)</span><br><span class="line">          <span class="keyword">return</span></span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">const</span> formData = <span class="keyword">new</span> FormData()</span><br><span class="line">        formData.append(<span class="string">&apos;file&apos;</span>, file)</span><br><span class="line">        formData.append(<span class="string">&apos;type&apos;</span>, <span class="number">2</span>)</span><br><span class="line">        _this.$store.dispatch(<span class="string">&apos;upload&apos;</span>, formData).then(<span class="function"><span class="params">res</span> =&gt;</span> {</span><br><span class="line">          <span class="keyword">if</span> (res.code === <span class="string">&apos;10000&apos;</span>) {</span><br><span class="line">            <span class="keyword">const</span> imgUrl = res.data.fullUrl</span><br><span class="line">            editor.execCommand(<span class="string">&apos;inserthtml&apos;</span>, <span class="string">`&lt;img src=&quot;<span class="subst">${imgUrl}</span>&quot; title=&quot;<span class="subst">${file.name}</span>&quot; /&gt;`</span>)</span><br><span class="line">            <span class="comment">// this.$yrtoast(this.$t(&apos;uploaded&apos;), 1500)</span></span><br><span class="line">          } <span class="keyword">else</span> {</span><br><span class="line">            _this.$yrtoast(_this.$t(<span class="string">&apos;errorCode&apos;</span>)[res.code], <span class="number">1000</span>, <span class="string">&apos;error&apos;</span>)</span><br><span class="line">          }</span><br><span class="line">        }).catch(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">          <span class="built_in">document</span>.body.removeChild(input)</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        })</span><br><span class="line">      })</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;style lang=&quot;less&quot; scoped&gt;</span></span><br><span class="line"><span class="regexp">  div {</span></span><br><span class="line"><span class="regexp">    width: 100%;</span></span><br><span class="line"><span class="regexp">  }</span></span><br><span class="line"><span class="regexp">&lt;/</span>style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>&#x4F7F;&#x7528;:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;UE ref=<span class="string">&quot;ue&quot;</span> v-model=<span class="string">&quot;ueHtml&quot;</span> v-<span class="keyword">if</span>=<span class="string">&quot;modalQuestion&quot;</span>&gt;&lt;/UE&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> UE <span class="keyword">from</span> <span class="string">&apos;@/components/ue&apos;</span></span><br></pre></td></tr></table></figure>
+
+<p>&#x8FD9;&#x91CC;&#x6211;&#x662F;&#x5728;&#x5F39;&#x7A97;&#x4E2D;&#x4F7F;&#x7528;&#x7684;, &#x4F7F;&#x7528;v-if &#x6BCF;&#x6B21;&#x6253;&#x5F00;&#x90FD;&#x751F;&#x6210;UE&#x5B9E;&#x4F8B;, &#x56E0;&#x4E3A;&#x8BED;&#x8A00;&#x5207;&#x6362;&#x4E0D;&#x5BF9;&#x5E94;, &#x6BCF;&#x6B21;&#x8BBE;&#x7F6E;&#x8BED;&#x8A00; &#x90FD;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x65B0;&#x7684;UE, &#x8FD9;&#x6837;&#x5BCC;&#x6587;&#x672C;&#x8BED;&#x8A00;&#x5C31;&#x662F;&#x5BF9;&#x5E94;&#x7684;<br>&#x4EE5;&#x4E0B;&#x662F;&#x5B98;&#x7F51;&#x5207;&#x6362;&#x8BED;&#x8A00;&#x505A;&#x6CD5;, &#x53EF;&#x81EA;&#x5DF1;&#x6D4B;&#x8BD5;:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ueConfig = {</span><br><span class="line">  <span class="comment">// &#x7F16;&#x8F91;&#x5668;&#x4E0D;&#x81EA;&#x52A8;&#x88AB;&#x5185;&#x5BB9;&#x6491;&#x9AD8;</span></span><br><span class="line">  autoHeightEnabled: <span class="literal">false</span>,</span><br><span class="line">  <span class="comment">// &#x521D;&#x59CB;&#x5BB9;&#x5668;&#x9AD8;&#x5EA6;</span></span><br><span class="line">  initialFrameHeight: <span class="number">115</span>,</span><br><span class="line">  <span class="comment">// &#x521D;&#x59CB;&#x5BB9;&#x5668;&#x5BBD;&#x5EA6;</span></span><br><span class="line">  initialFrameWidth: <span class="string">&apos;100%&apos;</span>,</span><br><span class="line">  <span class="comment">// &#x4E0A;&#x4F20;&#x6587;&#x4EF6;&#x63A5;&#x53E3;&#xFF08;&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#x662F;&#x6211;&#x4E3A;&#x4E86;&#x65B9;&#x4FBF;&#x5404;&#x4F4D;&#x4F53;&#x9A8C;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x529F;&#x80FD;&#x642D;&#x5EFA;&#x7684;&#x4E34;&#x65F6;&#x63A5;&#x53E3;&#xFF0C;&#x8BF7;&#x52FF;&#x5728;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4F7F;&#x7528;&#xFF01;&#xFF01;&#xFF01;&#xFF09;</span></span><br><span class="line">  serverUrl: <span class="string">&apos;http://35.201.165.105:8000/controller.php&apos;</span>,</span><br><span class="line">  UEDITOR_HOME_URL: URL,</span><br><span class="line">  enableAutoSave: <span class="literal">false</span>,</span><br><span class="line">  elementPathEnabled: <span class="literal">false</span>,</span><br><span class="line">  wordCount: <span class="literal">false</span>,</span><br><span class="line">  <span class="comment">// &#x83DC;&#x5355;&#x6309;&#x94AE;&#x9879; &apos;simpleupload&apos; &#x5355;&#x56FE;&#x7247;&#x4E0A;&#x4F20;&#x91CD;&#x5199;&apos;fullscreen&apos;,</span></span><br><span class="line">  toolbars: [</span><br><span class="line">    [<span class="string">&apos;source&apos;</span>, <span class="string">&apos;undo&apos;</span>, <span class="string">&apos;redo&apos;</span>, <span class="string">&apos;bold&apos;</span>, <span class="string">&apos;italic&apos;</span>, <span class="string">&apos;underline&apos;</span>, <span class="string">&apos;fontborder&apos;</span>, <span class="string">&apos;strikethrough&apos;</span>,</span><br><span class="line">      <span class="string">&apos;removeformat&apos;</span>, <span class="string">&apos;forecolor&apos;</span>, <span class="string">&apos;backcolor&apos;</span>, <span class="string">&apos;selectall&apos;</span>, <span class="string">&apos;link&apos;</span></span><br><span class="line">    ]</span><br><span class="line">  ],</span><br><span class="line">  langPath: URL + <span class="string">&apos;lang/&apos;</span>,</span><br><span class="line">  imageScaleEnabled: <span class="literal">false</span>,</span><br><span class="line">  listDefaultPaddingLeft: <span class="string">&apos;10&apos;</span></span><br><span class="line">}</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setLanguage</span>(<span class="params">langVal, ueConfig</span>) </span>{</span><br><span class="line">    UE.utils.extend({ <span class="attr">lang</span>: langVal }, ueConfig, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#x5220;&#x9664;</span></span><br><span class="line">    UE.delEditor(<span class="string">&quot;editor&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!UE._bak_I18N) {</span><br><span class="line">        UE._bak_I18N = UE.I18N;</span><br><span class="line">    }</span><br><span class="line">    UE.I18N = {};</span><br><span class="line">    UE.I18N[ langVal ] = UE._bak_I18N[ langVal ];</span><br><span class="line"></span><br><span class="line">    UE.getEditor(<span class="string">&apos;editor&apos;</span>, { <span class="attr">lang</span>: langVal });</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">watch: {</span><br><span class="line">  lang (_new) {</span><br><span class="line">    UE.utils.extend({ lang: langVal }, this.config, true);</span><br><span class="line"></span><br><span class="line">    // &#x5220;&#x9664;</span><br><span class="line">    const name = this.$refs.editor.attr(&apos;id&apos;)</span><br><span class="line">    UE.delEditor(name);</span><br><span class="line"></span><br><span class="line">    if (!UE._bak_I18N) {</span><br><span class="line">        UE._bak_I18N = UE.I18N;</span><br><span class="line">    }</span><br><span class="line">    UE.I18N = {};</span><br><span class="line">    UE.I18N[ _new ] = UE._bak_I18N[ _new ];</span><br><span class="line"></span><br><span class="line">    UE.getEditor(&apos;name, { lang: _new });</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+    </div>
+
+    <div>
+      
+      <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+  
+</div>
+
+      
+    </div>
+    
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Ringo 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="Ringo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Ringo</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ringo.org.cn/ueditor-vue/" title="Ueditor + vue-ueditor-wrap 多语言切换及自定义上传图片按钮">https://ringo.org.cn/ueditor-vue/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/vue/" rel="tag"><i class="fa fa-tag"></i> vue</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/js-message-box/" rel="next" title="原生js构建消息提示框">
+                  <i class="fa fa-chevron-left"></i> 原生js构建消息提示框
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/js-drag-click/" rel="prev" title="JS原生拖拽 + 点击事件">
+                  JS原生拖拽 + 点击事件 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#①修改Ueditor源码-并打包成生产文件"><span class="nav-number">1.</span> <span class="nav-text">①修改Ueditor源码 并打包成生产文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vue中使用"><span class="nav-number">2.</span> <span class="nav-text">vue中使用</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/porter-avatar.png"
+      alt="Ringo">
+  <p class="site-author-name" itemprop="name">Ringo</p>
+  <div class="site-description" itemprop="description">体验人生, 享受生活</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:suzheng91@163.com" title="E-Mail &rarr; mailto:suzheng91@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ringo</span>
+  <br/>
+  <a href="http://beian.miit.gov.cn" target="_blank">鄂ICP备18019135号-1</a>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/lib/zclip/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
+
+
+<script>
+NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'TaUTweqTv6FAMCLJEiD76XtX-gzGzoHsz',
+    appKey: 'eT6LUFgRFRuMsy8LWbXj1UPD',
+    placeholder: '填写上邮箱可以接收到我的回复邮件哦!  (｡♥ᴗ♥｡) ',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/assets/shizuku.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

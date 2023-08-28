@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/porter-32x32.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/porter-16x16.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="vue&amp;#x81EA;&amp;#x5B9A;&amp;#x4E49;loading&amp;#x6307;&amp;#x4EE4;&amp;#xFF0C;&amp;#x5728;&amp;#x5143;&amp;#x7D20;&amp;#x4E0A;&amp;#x4F7F;&amp;#x7528;&amp;#x4F60;v-loading&amp;#x53EF;&amp;#x663E;&amp;#x793A;&amp;#x6570;&amp;#x636E;&amp;#x52A0;&amp;#x8F7D;&amp;#x65F6;&amp;#x52A8;&amp;#x75">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue自定义loading指令">
+<meta property="og:url" content="https://ringo.org.cn/vue-loading-directive/index.html">
+<meta property="og:site_name" content="Ringo">
+<meta property="og:description" content="vue&amp;#x81EA;&amp;#x5B9A;&amp;#x4E49;loading&amp;#x6307;&amp;#x4EE4;&amp;#xFF0C;&amp;#x5728;&amp;#x5143;&amp;#x7D20;&amp;#x4E0A;&amp;#x4F7F;&amp;#x7528;&amp;#x4F60;v-loading&amp;#x53EF;&amp;#x663E;&amp;#x793A;&amp;#x6570;&amp;#x636E;&amp;#x52A0;&amp;#x8F7D;&amp;#x65F6;&amp;#x52A8;&amp;#x75">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2023-08-28T02:31:21.782Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue自定义loading指令">
+<meta name="twitter:description" content="vue&amp;#x81EA;&amp;#x5B9A;&amp;#x4E49;loading&amp;#x6307;&amp;#x4EE4;&amp;#xFF0C;&amp;#x5728;&amp;#x5143;&amp;#x7D20;&amp;#x4E0A;&amp;#x4F7F;&amp;#x7528;&amp;#x4F60;v-loading&amp;#x53EF;&amp;#x663E;&amp;#x793A;&amp;#x6570;&amp;#x636E;&amp;#x52A0;&amp;#x8F7D;&amp;#x65F6;&amp;#x52A8;&amp;#x75">
+  <link rel="canonical" href="https://ringo.org.cn/vue-loading-directive/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>vue自定义loading指令 | Ringo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ringo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-lab">
+      
+    
+
+    <a href="/lab/" rel="section"><i class="menu-item-icon fa fa-fw fa-balance-scale"></i> <br>lab</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th-list"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ringo.org.cn/vue-loading-directive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ringo">
+      <meta itemprop="description" content="体验人生, 享受生活">
+      <meta itemprop="image" content="/images/porter-avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ringo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">vue自定义loading指令
+
+          
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-11 18:23:05" itemprop="dateCreated datePublished" datetime="2020-08-11T18:23:05+08:00">2020-08-11</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-28 10:31:21" itemprop="dateModified" datetime="2023-08-28T10:31:21+08:00">2023-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/vue-loading-directive/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/vue-loading-directive/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+        <p>vue&#x81EA;&#x5B9A;&#x4E49;loading&#x6307;&#x4EE4;&#xFF0C;&#x5728;&#x5143;&#x7D20;&#x4E0A;&#x4F7F;&#x7528;&#x4F60;v-loading&#x53EF;&#x663E;&#x793A;&#x6570;&#x636E;&#x52A0;&#x8F7D;&#x65F6;&#x52A8;&#x753B;&#xFF0C;&#x6570;&#x636E;&#x52A0;&#x8F7D;&#x540E;&#x6D88;&#x5931;<br>&#x5206;&#x4E3A;&#x4E09;&#x4E2A;&#x6587;&#x4EF6;&#xFF1A;<br>loading.vue&#xFF08;loading&#x6837;&#x5F0F;&#x4E3B;&#x4F53;&#xFF09;<br>loading.js&#xFF08;&#x81EA;&#x5B9A;&#x4E49;&#x6307;&#x4EE4;&#x76F8;&#x5173;&#x65B9;&#x6CD5;&#xFF09;<br>index.js&#xFF08;&#x6307;&#x4EE4;&#x6CE8;&#x518C;&#x5230;&#x5168;&#x5C40;&#xFF09;<br>&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</p>
+<p>&#x4EE5;&#x4E0B;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#xFF1A;</p>
+<a id="more"></a>
+<h5 id="loading-vue"><a href="#loading-vue" class="headerlink" title="loading.vue"></a>loading.vue</h5><blockquote>
+<p>src/components/loading/loading.vue</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div</span><br><span class="line">    v-show=<span class="string">&quot;visible&quot;</span></span><br><span class="line">    :<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;[&apos;yr-loading&apos;, {&apos;yr-loading-FullScreen&apos;: fullscreen, &apos;yr-loading-sm&apos;: small}]&quot;</span></span><br><span class="line">    :style=<span class="string">&quot;{ background: background, top: topH + &apos;px&apos;, minHeight: minH + &apos;px&apos; }&quot;</span></span><br><span class="line">  &gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;mask-con&quot;</span>&gt;</span><br><span class="line">      &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;boxes&quot;</span>&gt;</span><br><span class="line">        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;box&quot;</span> v-<span class="keyword">for</span>=<span class="string">&quot;i in 4&quot;</span> :key=<span class="string">&quot;i&quot;</span>&gt;</span><br><span class="line">          &lt;div&gt;&lt;/div&gt;</span><br><span class="line">          &lt;div&gt;&lt;/div&gt;</span><br><span class="line">          &lt;div&gt;&lt;/div&gt;</span><br><span class="line">          &lt;div&gt;&lt;/div&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">      &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;box-tip&quot;</span> :style=<span class="string">&quot;{color: color, fontSize: fontSize + &apos;px&apos;}&quot;</span>&gt;{{langua[lang][<span class="string">&apos;loadingTip&apos;</span>]}}...&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> {</span><br><span class="line">  data () {</span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">      visible: <span class="literal">false</span>,</span><br><span class="line">      langua: {</span><br><span class="line">        <span class="string">&apos;zh-CN&apos;</span>: {</span><br><span class="line">          <span class="string">&apos;loadingTip&apos;</span>: <span class="string">&apos;&#x52A0;&#x8F7D;&#x4E2D;&apos;</span></span><br><span class="line">        }</span><br><span class="line">      },</span><br><span class="line">      fullscreen: <span class="literal">false</span>,</span><br><span class="line">      background: <span class="string">&apos;#fff&apos;</span>,</span><br><span class="line">      fontSize: <span class="number">14</span>,</span><br><span class="line">      color: <span class="string">&apos;#1E1E1E&apos;</span>,</span><br><span class="line">      topH: <span class="number">0</span>,</span><br><span class="line">      small: <span class="literal">false</span>,</span><br><span class="line">      minH: <span class="number">160</span></span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    lang () {</span><br><span class="line">      <span class="keyword">return</span> localStorage.getItem(<span class="string">&apos;localeLanguage&apos;</span>) || <span class="string">&apos;zh-TW&apos;</span></span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  mounted () {</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.fullscreen) {</span><br><span class="line">      <span class="built_in">document</span>.body.style.overflow = <span class="string">&apos;hidden&apos;</span></span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  destroyed () {</span><br><span class="line">    <span class="built_in">document</span>.body.style.overflowX = <span class="string">&apos;hidden&apos;</span></span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;style lang=&quot;less&quot; scoped&gt;</span></span><br><span class="line"><span class="regexp">@color: #5C8DF6;</span></span><br><span class="line"><span class="regexp">@colorRight: darken(@color, 15%);</span></span><br><span class="line"><span class="regexp">@colorLeft: darken(@color, 5%);</span></span><br><span class="line"><span class="regexp">@shadow: #DBE3F4;</span></span><br><span class="line"><span class="regexp">@size: 25px;</span></span><br><span class="line"><span class="regexp">@duration:800ms;</span></span><br><span class="line"><span class="regexp">@top: auto;</span></span><br><span class="line"><span class="regexp">@right: auto;</span></span><br><span class="line"><span class="regexp">@bottom: auto;</span></span><br><span class="line"><span class="regexp">@left: auto;</span></span><br><span class="line"><span class="regexp">@rotateY: 0deg;</span></span><br><span class="line"><span class="regexp">@rotateX: 0deg;</span></span><br><span class="line"><span class="regexp">@translateZ: calc(@size /</span> <span class="number">2</span>);</span><br><span class="line">.yr-loading {</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-direction: column;</span><br><span class="line">  justify-content: center;</span><br><span class="line">  align-items: center;</span><br><span class="line">  z-index: <span class="number">900</span>;</span><br><span class="line">  background: #fff;</span><br><span class="line">  transition: opacity <span class="number">.3</span>s;</span><br><span class="line">  width: <span class="number">100</span>%;</span><br><span class="line">  height: <span class="number">100</span>%;</span><br><span class="line">  position: absolute;</span><br><span class="line">  min-width: <span class="number">100</span>%;</span><br><span class="line">  .boxes {</span><br><span class="line">    height: calc(@size * <span class="number">2</span>);</span><br><span class="line">    width: calc(@size * <span class="number">3</span>);</span><br><span class="line">    position: relative;</span><br><span class="line">    transform-style: preserve<span class="number">-3</span>d;</span><br><span class="line">    transform-origin: <span class="number">50</span>% <span class="number">50</span>%;</span><br><span class="line">    margin-top: calc(@size * <span class="number">.2</span> * <span class="number">-1</span>);</span><br><span class="line">    transform: rotateX(<span class="number">60</span>deg) rotateZ(<span class="number">45</span>deg) rotateY(<span class="number">0</span>deg) translateZ(<span class="number">0</span>px);</span><br><span class="line">    .box {</span><br><span class="line">      width: @size;</span><br><span class="line">      height: @size;</span><br><span class="line">      top: <span class="number">0</span>;</span><br><span class="line">      left: <span class="number">0</span>;</span><br><span class="line">      position: absolute;</span><br><span class="line">      transform-style: preserve<span class="number">-3</span>d;</span><br><span class="line">      &amp;:nth-child(<span class="number">1</span>) {</span><br><span class="line">        transform: translate(<span class="number">100</span>%, <span class="number">0</span>);</span><br><span class="line">        animation: box1 @duration linear infinite;</span><br><span class="line">      }</span><br><span class="line">      &amp;:nth-child(<span class="number">2</span>) {</span><br><span class="line">        transform: translate(<span class="number">0</span>, <span class="number">100</span>%);</span><br><span class="line">        animation: box2 @duration linear infinite;</span><br><span class="line">      }</span><br><span class="line">      &amp;:nth-child(<span class="number">3</span>) {</span><br><span class="line">        transform: translate(<span class="number">100</span>%, <span class="number">100</span>%);</span><br><span class="line">        animation: box3 @duration linear infinite;</span><br><span class="line">      }</span><br><span class="line">      &amp;:nth-child(<span class="number">4</span>) {</span><br><span class="line">        transform: translate(<span class="number">200</span>%, <span class="number">0</span>);</span><br><span class="line">        animation: box4 @duration linear infinite;</span><br><span class="line">      }</span><br><span class="line">      &amp; &gt; div {</span><br><span class="line">        background: @color;</span><br><span class="line">        position: absolute;</span><br><span class="line">        width: <span class="number">100</span>%;</span><br><span class="line">        height: <span class="number">100</span>%;</span><br><span class="line">        background: @color;</span><br><span class="line">        top: @top;</span><br><span class="line">        right: @right;</span><br><span class="line">        bottom: @bottom;</span><br><span class="line">        left: @left;</span><br><span class="line">        transform: rotateY(@rotateY) rotateX(@rotateX) translateZ(@translateZ);</span><br><span class="line">        &amp;:nth-child(<span class="number">1</span>) {</span><br><span class="line">          top: <span class="number">0</span>;</span><br><span class="line">          left: <span class="number">0</span>;</span><br><span class="line">        }</span><br><span class="line">        &amp;:nth-child(<span class="number">2</span>) {</span><br><span class="line">          background: @colorRight;</span><br><span class="line">          right: <span class="number">0</span>;</span><br><span class="line">          transform: rotateY(<span class="number">90</span>deg) rotateX(@rotateX) translateZ(@translateZ);</span><br><span class="line">        }</span><br><span class="line">        &amp;:nth-child(<span class="number">3</span>) {</span><br><span class="line">          background: @colorLeft;</span><br><span class="line">          transform: rotateY(@rotateY) rotateX(<span class="number">-90</span>deg) translateZ(@translateZ);</span><br><span class="line">        }</span><br><span class="line">        &amp;:nth-child(<span class="number">4</span>) {</span><br><span class="line">          background: @shadow;</span><br><span class="line">          top: <span class="number">0</span>;</span><br><span class="line">          left: <span class="number">0</span>;</span><br><span class="line">          transform: rotateY(@rotateY) rotateX(@rotateX) translateZ(calc(@size * <span class="number">3</span> * <span class="number">-1</span>));</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  .box-tip {</span><br><span class="line">    margin-top: calc(@size * <span class="number">3.2</span>);</span><br><span class="line">    color: #1E1E1E;</span><br><span class="line">    font-size: <span class="number">14</span>px;</span><br><span class="line">  }</span><br><span class="line">  &amp;.yr-loading-sm {</span><br><span class="line">    @smSize: <span class="number">15</span>px;</span><br><span class="line">    @translateZSm: calc(@smSize / <span class="number">2</span>);</span><br><span class="line">    margin-top: <span class="number">0</span>;</span><br><span class="line">    .boxes {</span><br><span class="line">      height: calc(@smSize * <span class="number">2</span>);</span><br><span class="line">      width: calc(@smSize * <span class="number">3</span>);</span><br><span class="line">      margin-top: calc(@smSize * <span class="number">.2</span> * <span class="number">-1</span>);</span><br><span class="line">      .box {</span><br><span class="line">        width: @smSize;</span><br><span class="line">        height: @smSize;</span><br><span class="line">        &amp; &gt; div {</span><br><span class="line">            transform: rotateY(@rotateY) rotateX(@rotateX) translateZ(@translateZSm);</span><br><span class="line">            &amp;:nth-child(<span class="number">2</span>) {</span><br><span class="line">                transform: rotateY(<span class="number">90</span>deg) rotateX(@rotateX) translateZ(@translateZSm);</span><br><span class="line">            }</span><br><span class="line">            &amp;:nth-child(<span class="number">3</span>) {</span><br><span class="line">                transform: rotateY(@rotateY) rotateX(<span class="number">-90</span>deg) translateZ(@translateZSm);</span><br><span class="line">            }</span><br><span class="line">            &amp;:nth-child(<span class="number">4</span>) {</span><br><span class="line">                transform: rotateY(@rotateY) rotateX(@rotateX) translateZ(calc(@smSize * <span class="number">3</span> * <span class="number">-1</span>));</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">    .box-tip {</span><br><span class="line">      margin-top: calc(@smSize * <span class="number">3.2</span>);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">.yr-loading-FullScreen {</span><br><span class="line">  .yr-loading();</span><br><span class="line">  width: <span class="number">100</span>vw;</span><br><span class="line">  height: <span class="number">100</span>vh;</span><br><span class="line">  top: <span class="number">0</span>;</span><br><span class="line">  background: rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.4</span>);</span><br><span class="line">  .mask-con {</span><br><span class="line">    background: #fff;</span><br><span class="line">    border-radius: <span class="number">4</span>px;</span><br><span class="line">    width: <span class="number">180</span>px;</span><br><span class="line">    height: <span class="number">200</span>px;</span><br><span class="line">    display: flex;</span><br><span class="line">    flex-direction: column;</span><br><span class="line">    justify-content: center;</span><br><span class="line">    align-items: center;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">@keyframes box1 {</span><br><span class="line">  <span class="number">0</span>%,</span><br><span class="line">  <span class="number">50</span>% {</span><br><span class="line">    transform: translate(<span class="number">100</span>%, <span class="number">0</span>);</span><br><span class="line">  }</span><br><span class="line">  <span class="number">100</span>% {</span><br><span class="line">    transform: translate(<span class="number">200</span>%, <span class="number">0</span>);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">@keyframes box2 {</span><br><span class="line">  <span class="number">0</span>%{</span><br><span class="line">    transform: translate(<span class="number">0</span>, <span class="number">100</span>%);</span><br><span class="line">  }</span><br><span class="line">  <span class="number">50</span>% {</span><br><span class="line">    transform: translate(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  }</span><br><span class="line">  <span class="number">100</span>% {</span><br><span class="line">    transform: translate(<span class="number">100</span>%, <span class="number">0</span>);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">@keyframes box3 {</span><br><span class="line">  <span class="number">0</span>%,</span><br><span class="line">  <span class="number">50</span>% {</span><br><span class="line">    transform: translate(<span class="number">100</span>%, <span class="number">100</span>%);</span><br><span class="line">  }</span><br><span class="line">  <span class="number">100</span>% {</span><br><span class="line">    transform: translate(<span class="number">0</span>, <span class="number">100</span>%);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">@keyframes box4 {</span><br><span class="line">  <span class="number">0</span>%{</span><br><span class="line">    transform: translate(<span class="number">200</span>%, <span class="number">0</span>);</span><br><span class="line">  }</span><br><span class="line">  <span class="number">50</span>% {</span><br><span class="line">    transform: translate(<span class="number">200</span>%, <span class="number">100</span>%);</span><br><span class="line">  }</span><br><span class="line">  <span class="number">100</span>% {</span><br><span class="line">    transform: translate(<span class="number">100</span>%, <span class="number">100</span>%);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="loading-js"><a href="#loading-js" class="headerlink" title="loading.js"></a>loading.js</h5><blockquote>
+<p>src/components/loading/loading.js</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&apos;vue&apos;</span></span><br><span class="line"><span class="keyword">import</span> Loading <span class="keyword">from</span> <span class="string">&apos;./loading.vue&apos;</span></span><br><span class="line"></span><br><span class="line">Vue.component(<span class="string">&apos;yrLoading&apos;</span>, Loading)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Mask = Vue.extend(Loading)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> toggleLoading = <span class="function">(<span class="params">el, binding, vnode</span>) =&gt;</span> {</span><br><span class="line">  <span class="keyword">const</span> parentEle = el</span><br><span class="line">  <span class="keyword">if</span> ((<span class="keyword">typeof</span> binding.value === <span class="string">&apos;boolean&apos;</span> &amp;&amp; binding.value) || (binding.value.loading)) {</span><br><span class="line">    Vue.nextTick(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">      parentEle.classList.add(<span class="string">&apos;loading&apos;</span>)</span><br><span class="line">      <span class="comment">// &#x63A7;&#x5236;loading&#x7EC4;&#x4EF6;&#x663E;&#x793A;</span></span><br><span class="line">      el.instance.visible = <span class="literal">true</span></span><br><span class="line">      <span class="keyword">if</span> (binding.modifiers.fullscreen) { <span class="comment">// &#x5168;&#x5C4F;&#x60C5;&#x51B5;&#x4E0B;</span></span><br><span class="line">        el.mask.style.top = <span class="number">0</span></span><br><span class="line">        <span class="comment">// el.instance.fullscreen = true</span></span><br><span class="line">        <span class="built_in">document</span>.body.style.overflow = <span class="string">&apos;hidden&apos;</span></span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(el.mask)</span><br><span class="line">      } <span class="keyword">else</span> { <span class="comment">// &#x975E;&#x5168;&#x5C4F;&#x60C5;&#x51B5;&#x4E0B;</span></span><br><span class="line">        <span class="comment">// el.instance.fullscreen = false</span></span><br><span class="line">        <span class="keyword">let</span> height = el.clientHeight <span class="comment">// &#x5F53;&#x524D;&#x5143;&#x7D20;&#x9AD8;&#x5EA6;</span></span><br><span class="line">        <span class="keyword">let</span> width = el.clientWidth <span class="comment">// &#x5F53;&#x524D;&#x5143;&#x7D20;&#x5BBD;&#x5EA6;</span></span><br><span class="line">        <span class="comment">// let offsetTop = el.offsetTop // &#x5F53;&#x524D;&#x5143;&#x7D20;&#x8DDD;&#x79BB;&#x9876;&#x90E8;&#x8DDD;&#x79BB;</span></span><br><span class="line">        <span class="comment">// console.log(el, width, height, el.instance.topH)</span></span><br><span class="line">        el.style.position = <span class="string">&apos;relative&apos;</span></span><br><span class="line">        <span class="comment">// &#x7ED9;&#x8499;&#x7248;&#x8D4B;&#x503C;</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">Array</span>.from(el.classList).includes(<span class="string">&apos;yr-table&apos;</span>) || binding.modifiers.table) { <span class="comment">// &#x5982;&#x679C;&#x662F;table&#x7EC4;&#x4EF6;&#xFF0C;&#x8BBE;&#x7F6E;&#x8DDD;&#x79BB;table&#x9876;&#x90E8;thead&#x7684;&#x8DDD;&#x79BB;</span></span><br><span class="line">          <span class="keyword">const</span> tableHeadHeight = el.getElementsByTagName(<span class="string">&apos;thead&apos;</span>)[<span class="number">0</span>].clientHeight</span><br><span class="line">          el.mask.style.top = tableHeadHeight + <span class="string">&apos;px&apos;</span></span><br><span class="line">          el.mask.style.height = (height - tableHeadHeight) + <span class="string">&apos;px&apos;</span></span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">          <span class="comment">// el.mask.style.top = offsetTop + &quot;px&quot;</span></span><br><span class="line">          el.mask.style.height = (height - el.instance.topH) + <span class="string">&apos;px&apos;</span></span><br><span class="line">        }</span><br><span class="line">        el.mask.style.width = width + <span class="string">&apos;px&apos;</span></span><br><span class="line">        el.appendChild(el.mask)</span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">  } <span class="keyword">else</span> {</span><br><span class="line">    <span class="comment">// &#x79FB;&#x9664;&#x8282;&#x70B9;</span></span><br><span class="line">    parentEle.classList.remove(<span class="string">&apos;loading&apos;</span>)</span><br><span class="line">    el.mask &amp;&amp; el.mask.parentNode &amp;&amp; el.mask.parentNode.removeChild(el.mask)</span><br><span class="line">    el.instance.visible = <span class="literal">false</span></span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> {</span><br><span class="line">  <span class="comment">// &#x53EA;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#xFF0C;&#x6307;&#x4EE4;&#x7B2C;&#x4E00;&#x6B21;&#x7ED1;&#x5B9A;&#x5230;&#x5143;&#x7D20;&#x65F6;&#x8C03;&#x7528;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x6027;&#x7684;&#x521D;&#x59CB;&#x5316;&#x8BBE;&#x7F6E;&#x3002;</span></span><br><span class="line">  bind: <span class="function"><span class="keyword">function</span> (<span class="params">el, binding</span>) </span>{</span><br><span class="line">    <span class="keyword">let</span> background = binding.value.background</span><br><span class="line">    <span class="keyword">let</span> color = binding.value.color</span><br><span class="line">    <span class="keyword">let</span> fontSize = binding.value.fontSize</span><br><span class="line">    <span class="keyword">let</span> topH = binding.value.topH</span><br><span class="line">    <span class="keyword">let</span> small = binding.value.small</span><br><span class="line">    <span class="keyword">let</span> minH = binding.value.minH</span><br><span class="line">    <span class="keyword">const</span> mask = <span class="keyword">new</span> Mask({</span><br><span class="line">      el: <span class="built_in">document</span>.createElement(<span class="string">&apos;div&apos;</span>),</span><br><span class="line">      data: {</span><br><span class="line">        fullscreen: !!binding.modifiers.fullscreen,</span><br><span class="line">        background: background || <span class="string">&apos;#fff&apos;</span>,</span><br><span class="line">        color: color || <span class="literal">null</span>,</span><br><span class="line">        fontSize: fontSize || <span class="number">14</span>,</span><br><span class="line">        topH: topH || <span class="number">0</span>,</span><br><span class="line">        small: small,</span><br><span class="line">        minH: minH || <span class="number">600</span></span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">    el.instance = mask</span><br><span class="line">    el.mask = mask.$el</span><br><span class="line">    <span class="comment">// el.maskStyle = {}</span></span><br><span class="line">    binding.value &amp;&amp; toggleLoading(el, binding)</span><br><span class="line">  },</span><br><span class="line">  <span class="comment">// &#x88AB;&#x7ED1;&#x5B9A;&#x5143;&#x7D20;&#x63D2;&#x5165;&#x7236;&#x8282;&#x70B9;&#x65F6;&#x8C03;&#x7528; (&#x4EC5;&#x4FDD;&#x8BC1;&#x7236;&#x8282;&#x70B9;&#x5B58;&#x5728;&#xFF0C;&#x4F46;&#x4E0D;&#x4E00;&#x5B9A;&#x5DF2;&#x88AB;&#x63D2;&#x5165;&#x6587;&#x6863;&#x4E2D;)&#x3002;</span></span><br><span class="line">  inserted: <span class="function"><span class="keyword">function</span> (<span class="params">el, binding, vnode, oldVnode</span>) </span>{</span><br><span class="line">    <span class="comment">// console.log(&quot;&#x5143;&#x7D20;&#x63D2;&#x5165;&#x7684;&#x65F6;&#x5019;&quot;);</span></span><br><span class="line">  },</span><br><span class="line">  <span class="comment">// &#x6240;&#x5728;&#x7EC4;&#x4EF6;&#x7684; VNode &#x66F4;&#x65B0;&#x65F6;&#x8C03;&#x7528;</span></span><br><span class="line">  update: <span class="function"><span class="keyword">function</span> (<span class="params">el, binding</span>) </span>{</span><br><span class="line">    <span class="keyword">if</span> (binding.oldValue !== binding.value) {</span><br><span class="line">      toggleLoading(el, binding)</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  <span class="comment">// &#x6307;&#x4EE4;&#x6240;&#x5728;&#x7EC4;&#x4EF6;&#x7684; VNode &#x53CA;&#x5176;&#x5B50; VNode &#x5168;&#x90E8;&#x66F4;&#x65B0;&#x540E;&#x8C03;&#x7528;</span></span><br><span class="line">  componentUpdated () {</span><br><span class="line">    <span class="comment">// console.log(&quot;&#x6E32;&#x67D3;&#x5B8C;&#x6210;&#x4E86;&quot;);</span></span><br><span class="line">  },</span><br><span class="line">  <span class="comment">// &#x53EA;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#xFF0C;&#x6307;&#x4EE4;&#x4E0E;&#x5143;&#x7D20;&#x89E3;&#x7ED1;&#x65F6;&#x8C03;&#x7528;</span></span><br><span class="line">  unbind: <span class="function"><span class="keyword">function</span> (<span class="params">el, binding</span>) </span>{</span><br><span class="line">    el.mask &amp;&amp; el.mask.parentNode &amp;&amp; el.mask.parentNode.removeChild(el.mask)</span><br><span class="line">    el.instance &amp;&amp; el.instance.$destroy()</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h5 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h5><blockquote>
+<p>src/components/loading/index.js</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> loading <span class="keyword">from</span> <span class="string">&apos;./loading&apos;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> {</span><br><span class="line">  install (Vue) {</span><br><span class="line">    Vue.directive(<span class="string">&apos;loading&apos;</span>, loading)</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x5728;&#x5165;&#x53E3;&#x6587;&#x4EF6;src/main.js&#x4E2D;&#x5F15;&#x7528;loading</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> loading <span class="keyword">from</span> <span class="string">&apos;@/components/loading&apos;</span></span><br><span class="line">Vue.use(loading)</span><br></pre></td></tr></table></figure>
+
+<h5 id="&#x7EC4;&#x4EF6;&#x5185;&#x4F7F;&#x7528;"><a href="#&#x7EC4;&#x4EF6;&#x5185;&#x4F7F;&#x7528;" class="headerlink" title="&#x7EC4;&#x4EF6;&#x5185;&#x4F7F;&#x7528;"></a>&#x7EC4;&#x4EF6;&#x5185;&#x4F7F;&#x7528;</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;loading-wrap&quot;</span> v-loading=<span class="string">&quot;{loading: isLoading}&quot;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>&#x5168;&#x5C4F;loading&#xFF1A; v-loading.fullscreen</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;loading-wrap&quot;</span> v-loading.fullscreen=<span class="string">&quot;{loading: isLoading}&quot;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>v-loading&#x53C2;&#x6570;&#xFF1A;Boolean&#x503C;&#x6216;Object&#x5BF9;&#x8C61;<br>&#x5BF9;&#x8C61;&#x5185;&#x53EF;&#x8BBE;&#x7F6E;&#x53C2;&#x6570; {<br>  loading: false, // &#x662F;&#x5426;&#x663E;&#x793A;loading<br>  background: &#x2018;#fff&#x2019;, // &#x8499;&#x7248;&#x80CC;&#x666F;&#x8272;<br>  color: null, // &#x63D0;&#x793A;&#x6587;&#x5B57;&#x989C;&#x8272;<br>  fontSize: 14, // &#x63D0;&#x793A;&#x6587;&#x5B57;&#x5927;&#x5C0F;<br>  topH: 0, // loading&#x8DDD;&#x79BB;&#x7236;&#x5143;&#x7D20;top&#x503C;<br>  small: small, // loading&#x663E;&#x793A;&#x52A8;&#x753B;&#x5143;&#x7D20;&#x5927;&#x5C0F;<br>  minH: minH // loading&#x6700;&#x5C0F;&#x9AD8;&#x5EA6;<br>}</p>
+
+    </div>
+
+    <div>
+      
+      <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+  
+</div>
+
+      
+    </div>
+    
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Ringo 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="Ringo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Ringo</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ringo.org.cn/vue-loading-directive/" title="vue自定义loading指令">https://ringo.org.cn/vue-loading-directive/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/vue/" rel="tag"><i class="fa fa-tag"></i> vue</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/h5-audio-ios-2/" rel="next" title="h5移动端audio消息声音依次提醒">
+                  <i class="fa fa-chevron-left"></i> h5移动端audio消息声音依次提醒
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/vue-plugin-global/" rel="prev" title="vue自定义全局登录插件">
+                  vue自定义全局登录插件 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#loading-vue"><span class="nav-number">1.</span> <span class="nav-text">loading.vue</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#loading-js"><span class="nav-number">2.</span> <span class="nav-text">loading.js</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#index-js"><span class="nav-number">3.</span> <span class="nav-text">index.js</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组件内使用"><span class="nav-number">4.</span> <span class="nav-text">组件内使用</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/porter-avatar.png"
+      alt="Ringo">
+  <p class="site-author-name" itemprop="name">Ringo</p>
+  <div class="site-description" itemprop="description">体验人生, 享受生活</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:suzheng91@163.com" title="E-Mail &rarr; mailto:suzheng91@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ringo</span>
+  <br/>
+  <a href="http://beian.miit.gov.cn" target="_blank">鄂ICP备18019135号-1</a>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/lib/zclip/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
+
+
+<script>
+NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'TaUTweqTv6FAMCLJEiD76XtX-gzGzoHsz',
+    appKey: 'eT6LUFgRFRuMsy8LWbXj1UPD',
+    placeholder: '填写上邮箱可以接收到我的回复邮件哦!  (｡♥ᴗ♥｡) ',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/assets/shizuku.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

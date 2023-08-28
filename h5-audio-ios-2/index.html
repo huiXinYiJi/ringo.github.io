@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/porter-32x32.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/porter-16x16.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;#x5B9E;&amp;#x73B0;&amp;#x6548;&amp;#x679C;&amp;#xFF1A;&amp;#x804A;&amp;#x5929;&amp;#x65F6;&amp;#xFF0C;&amp;#x6D88;&amp;#x606F;&amp;#x8FDE;&amp;#x7EED;&amp;#x5230;&amp;#x6765;&amp;#xFF0C;&amp;#x58F0;&amp;#x97F3;&amp;#x4F9D;&amp;#x6B21;&amp;#x64AD;&amp;#x653E;&amp;#x3002;&amp;#x6709;&amp;#x591A;">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="h5移动端audio消息声音依次提醒">
+<meta property="og:url" content="https://ringo.org.cn/h5-audio-ios-2/index.html">
+<meta property="og:site_name" content="Ringo">
+<meta property="og:description" content="&amp;#x5B9E;&amp;#x73B0;&amp;#x6548;&amp;#x679C;&amp;#xFF1A;&amp;#x804A;&amp;#x5929;&amp;#x65F6;&amp;#xFF0C;&amp;#x6D88;&amp;#x606F;&amp;#x8FDE;&amp;#x7EED;&amp;#x5230;&amp;#x6765;&amp;#xFF0C;&amp;#x58F0;&amp;#x97F3;&amp;#x4F9D;&amp;#x6B21;&amp;#x64AD;&amp;#x653E;&amp;#x3002;&amp;#x6709;&amp;#x591A;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2023-08-28T02:31:21.777Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="h5移动端audio消息声音依次提醒">
+<meta name="twitter:description" content="&amp;#x5B9E;&amp;#x73B0;&amp;#x6548;&amp;#x679C;&amp;#xFF1A;&amp;#x804A;&amp;#x5929;&amp;#x65F6;&amp;#xFF0C;&amp;#x6D88;&amp;#x606F;&amp;#x8FDE;&amp;#x7EED;&amp;#x5230;&amp;#x6765;&amp;#xFF0C;&amp;#x58F0;&amp;#x97F3;&amp;#x4F9D;&amp;#x6B21;&amp;#x64AD;&amp;#x653E;&amp;#x3002;&amp;#x6709;&amp;#x591A;">
+  <link rel="canonical" href="https://ringo.org.cn/h5-audio-ios-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>h5移动端audio消息声音依次提醒 | Ringo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ringo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-lab">
+      
+    
+
+    <a href="/lab/" rel="section"><i class="menu-item-icon fa fa-fw fa-balance-scale"></i> <br>lab</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th-list"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ringo.org.cn/h5-audio-ios-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ringo">
+      <meta itemprop="description" content="体验人生, 享受生活">
+      <meta itemprop="image" content="/images/porter-avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ringo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">h5移动端audio消息声音依次提醒
+
+          
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-11 18:20:10" itemprop="dateCreated datePublished" datetime="2020-08-11T18:20:10+08:00">2020-08-11</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-28 10:31:21" itemprop="dateModified" datetime="2023-08-28T10:31:21+08:00">2023-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/h5-audio-ios-2/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/h5-audio-ios-2/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+        <p>&#x5B9E;&#x73B0;&#x6548;&#x679C;&#xFF1A;&#x804A;&#x5929;&#x65F6;&#xFF0C;&#x6D88;&#x606F;&#x8FDE;&#x7EED;&#x5230;&#x6765;&#xFF0C;&#x58F0;&#x97F3;&#x4F9D;&#x6B21;&#x64AD;&#x653E;&#x3002;&#x6709;&#x591A;&#x5C11;&#x6D88;&#x606F;&#xFF0C;&#x64AD;&#x653E;&#x591A;&#x5C11;&#x6B21;&#x3002;<br>&#x8FD9;&#x79CD;&#x64AD;&#x653E;&#x6548;&#x679C;&#x5E76;&#x4E0D;&#x7406;&#x60F3;&#xFF0C;&#x53EA;&#x662F;&#x5728;&#x7A0B;&#x5E8F;&#x4E2D;&#x63D0;&#x793A;&#x97F3;&#x6B21;&#x6570;&#x662F;&#x5BF9;&#x7684;&#xFF0C;&#x4F46;&#x7531;&#x4E8E;&#x64AD;&#x653E;&#x4E00;&#x6B21;&#x5230;&#x4E0B;&#x6B21;&#x64AD;&#x653E;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x65F6;&#x95F4;&#x5DEE;&#xFF0C;<br>&#x56E0;&#x4E3A;&#x6D4F;&#x89C8;&#x5668;&#x4E00;&#x6B21;&#x53EA;&#x80FD;&#x64AD;&#x653E;&#x4E00;&#x4E2A;&#x97F3;&#x9891;&#xFF0C;&#x4ECE;&#x97F3;&#x9891;&#x64AD;&#x653E;&#x5230;&#x4E0D;&#x64AD;&#x653E;&#x4E4B;&#x95F4;&#x6709;&#x4E00;&#x4E2A;&#x6742;&#x97F3;&#x533A;&#x95F4;&#xFF0C;&#x56E0;&#x6B64;&#x8FD9;&#x79CD;&#x64AD;&#x653E;&#x6548;&#x679C;&#x5E76;&#x4E0D;&#x5229;&#x843D;</p>
+<p>&#x601D;&#x8DEF;&#xFF1A;&#x7EDF;&#x8BA1;&#x9700;&#x8981;&#x64AD;&#x653E;&#x7684;&#x6B21;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x5F53;&#x524D;&#x97F3;&#x9891;&#x6CA1;&#x6709;&#x5904;&#x4E8E;&#x64AD;&#x653E;&#x72B6;&#x6001;&#xFF0C;&#x5219;&#x64AD;&#x653E;&#x97F3;&#x9891;&#xFF0C;&#x64AD;&#x653E;&#x6B21;&#x6570;&#x51CF;&#x4E00;&#xFF0C;<br>&#x5426;&#x5219;&#x7B49;&#x97F3;&#x9891;&#x64AD;&#x653E;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x518D;&#x8FDB;&#x884C;&#x4E0B;&#x4E00;&#x6B21;&#x64AD;&#x653E;&#xFF0C;&#x76F4;&#x5230;&#x8981;&#x64AD;&#x653E;&#x7684;&#x6B21;&#x6570;&#x653E;&#x5B8C;</p>
+<p>&#x4EE5;&#x4E0B;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#xFF1A;</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;audio&quot;</span>&gt;</span><br><span class="line">    &lt;audio controls id=<span class="string">&quot;audioPlay_z&quot;</span> src=<span class="string">&quot;/file/notification.mp3&quot;</span> v-<span class="keyword">if</span>=<span class="string">&quot;!isMobile&quot;</span>&gt;&lt;/audio&gt;</span><br><span class="line">    &lt;audio controls id=<span class="string">&quot;audioPlay_z&quot;</span> src=<span class="string">&quot;/file/notification_m.mp3&quot;</span> v-<span class="keyword">else</span>&gt;&lt;/audio&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">import</span> { getPlatformType } <span class="keyword">from</span> <span class="string">&apos;@/utils&apos;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> {</span><br><span class="line">  name: <span class="string">&apos;PlayNotifyVoice&apos;</span>,</span><br><span class="line">  data () {</span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">      audioFile: <span class="string">&apos;/file/notification.mp3&apos;</span>,</span><br><span class="line">      palyNum: <span class="number">0</span>,</span><br><span class="line">      isPlaying: <span class="literal">false</span></span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    isiOS () {</span><br><span class="line">      <span class="keyword">return</span> !!navigator.userAgent.match(<span class="regexp">/\(i[^;]+;( U;)? CPU.+Mac OS X/</span>) <span class="comment">// ios</span></span><br><span class="line">    },</span><br><span class="line">    isSafari () {</span><br><span class="line">      <span class="keyword">const</span> userAgent = navigator.userAgent</span><br><span class="line">      <span class="keyword">return</span> userAgent.indexOf(<span class="string">&apos;Safari&apos;</span>) &gt; <span class="number">-1</span> &amp;&amp; userAgent.indexOf(<span class="string">&apos;Chrome&apos;</span>) === <span class="number">-1</span> &amp;&amp; userAgent.indexOf(<span class="string">&apos;Edge&apos;</span>) === <span class="number">-1</span> &amp;&amp; userAgent.indexOf(<span class="string">&apos;OPR&apos;</span>) === <span class="number">-1</span> <span class="comment">// safari</span></span><br><span class="line">    },</span><br><span class="line">    isMobile () {</span><br><span class="line">      <span class="keyword">return</span> getPlatformType() !== <span class="string">&apos;pc&apos;</span></span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  beforeMount () {</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.isiOS) {</span><br><span class="line">      <span class="built_in">document</span>.body.addEventListener(<span class="string">&apos;touchstart&apos;</span>, <span class="keyword">this</span>.init, <span class="literal">false</span>)</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.isSafari) {</span><br><span class="line">      <span class="built_in">document</span>.body.addEventListener(<span class="string">&apos;click&apos;</span>, <span class="keyword">this</span>.init, <span class="literal">false</span>)</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  mounted () {</span><br><span class="line">    <span class="keyword">var</span> audioEle = <span class="built_in">document</span>.getElementById(<span class="string">&apos;audioPlay_z&apos;</span>)</span><br><span class="line">    audioEle.addEventListener(<span class="string">&apos;ended&apos;</span>, (res) =&gt; { <span class="comment">// &#x6682;&#x505C;&#x65F6;&#x4F1A;&#x89E6;&#x53D1;&#xFF0C;&#x5F53;&#x64AD;&#x653E;&#x5B8C;&#x4E00;&#x9996;&#x6B4C;&#x66F2;&#x65F6;&#x4E5F;&#x4F1A;&#x89E6;&#x53D1;</span></span><br><span class="line">      <span class="keyword">this</span>.isPlaying = <span class="literal">false</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="string">&apos;fastSeek&apos;</span> <span class="keyword">in</span> audioEle) { <span class="comment">// safari</span></span><br><span class="line">        audioEle.fastSeek(<span class="number">1</span>) <span class="comment">// &#x6539;&#x53D8;audio.currentTime&#x7684;&#x503C;</span></span><br><span class="line">        audioEle.load()</span><br><span class="line">      } <span class="keyword">else</span> {</span><br><span class="line">        audioEle.currentTime = <span class="number">1</span></span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">this</span>.palyNum = <span class="keyword">this</span>.palyNum - <span class="number">1</span></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&apos;ended&apos;</span>, <span class="keyword">this</span>.palyNum)</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.palyNum &gt; <span class="number">0</span>) {</span><br><span class="line">        <span class="keyword">this</span>.playVoice()</span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">    audioEle.addEventListener(<span class="string">&apos;playing&apos;</span>, (res) =&gt; {</span><br><span class="line">      <span class="keyword">this</span>.isPlaying = <span class="literal">true</span></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&apos;isPlaying&apos;</span>)</span><br><span class="line">    })</span><br><span class="line">    audioEle.addEventListener(<span class="string">&apos;pause&apos;</span>, (res) =&gt; {</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&apos;pause&apos;</span>)</span><br><span class="line">    })</span><br><span class="line">    audioEle.addEventListener(<span class="string">&apos;canplay&apos;</span>, (res) =&gt; {</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&apos;canplay&apos;</span>)</span><br><span class="line">    })</span><br><span class="line">    audioEle.addEventListener(<span class="string">&apos;canplaythrough&apos;</span>, (res) =&gt; {</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&apos;canplaythrough&apos;</span>)</span><br><span class="line">    })</span><br><span class="line">    audioEle.addEventListener(<span class="string">&apos;timeupdate&apos;</span>, (res) =&gt; {</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&apos;timeupdate&apos;</span>)</span><br><span class="line">    })</span><br><span class="line">  },</span><br><span class="line">  methods: {</span><br><span class="line">    <span class="comment">// &#x521D;&#x59CB;&#x5316;</span></span><br><span class="line">    init () {</span><br><span class="line">      <span class="keyword">var</span> audioEle = <span class="built_in">document</span>.getElementById(<span class="string">&apos;audioPlay_z&apos;</span>)</span><br><span class="line">      <span class="keyword">let</span> playPromise = audioEle.play()</span><br><span class="line">      <span class="keyword">if</span> (playPromise !== <span class="literal">undefined</span>) {</span><br><span class="line">        playPromise.then(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">          audioEle.play()</span><br><span class="line">          audioEle.pause()</span><br><span class="line">          <span class="keyword">if</span> (<span class="string">&apos;fastSeek&apos;</span> <span class="keyword">in</span> audioEle) { <span class="comment">// safari</span></span><br><span class="line">            audioEle.fastSeek(<span class="number">1</span>) <span class="comment">// &#x6539;&#x53D8;audio.currentTime&#x7684;&#x503C;</span></span><br><span class="line">          } <span class="keyword">else</span> {</span><br><span class="line">            audioEle.currentTime = <span class="number">1</span></span><br><span class="line">          }</span><br><span class="line">        }).catch(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">&apos;play failed init&apos;</span>)</span><br><span class="line">        })</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">this</span>.palyNum = <span class="number">0</span></span><br><span class="line">      <span class="keyword">this</span>.isPlaying = <span class="literal">false</span></span><br><span class="line">      <span class="built_in">document</span>.body.removeEventListener(<span class="string">&apos;touchstart&apos;</span>, <span class="keyword">this</span>.init, <span class="literal">false</span>)</span><br><span class="line">      <span class="built_in">document</span>.body.removeEventListener(<span class="string">&apos;click&apos;</span>, <span class="keyword">this</span>.init, <span class="literal">false</span>)</span><br><span class="line">    },</span><br><span class="line">    <span class="comment">// &#x64AD;&#x653E;&#x6D88;&#x606F;&#x63D0;&#x793A;&#x97F3;</span></span><br><span class="line">    playNotifyVoice () {</span><br><span class="line">      <span class="keyword">if</span> (!!<span class="built_in">window</span>.ActiveXObject || <span class="string">&apos;ActiveXObject&apos;</span> <span class="keyword">in</span> <span class="built_in">window</span>) { <span class="comment">// IE&#x5185;&#x6838;&#x6D4F;&#x89C8;&#x5668;</span></span><br><span class="line">        <span class="comment">// eslint-disable-next-line</span></span><br><span class="line">        <span class="keyword">var</span> OSPlayer = <span class="keyword">new</span> ActiveXObject(<span class="string">&apos;WMPLayer.OCX&apos;</span>)</span><br><span class="line">        OSPlayer.url = <span class="keyword">this</span>.audioFile</span><br><span class="line">        OSPlayer.controls.play()</span><br><span class="line">      } <span class="keyword">else</span> {</span><br><span class="line">        <span class="keyword">this</span>.palyNum++</span><br><span class="line">        <span class="keyword">this</span>.playVoice()</span><br><span class="line">      }</span><br><span class="line">    },</span><br><span class="line">    playVoice () {</span><br><span class="line">      <span class="keyword">var</span> audioEle = <span class="built_in">document</span>.getElementById(<span class="string">&apos;audioPlay_z&apos;</span>)</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.isPlaying, audioEle)</span><br><span class="line">      <span class="keyword">if</span> (!<span class="keyword">this</span>.isPlaying) {</span><br><span class="line">        <span class="keyword">let</span> playPromise = audioEle.play()</span><br><span class="line">        <span class="keyword">if</span> (playPromise !== <span class="literal">undefined</span>) {</span><br><span class="line">          playPromise.then(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&apos;isPlaying&apos;</span>, <span class="keyword">this</span>.isPlaying, <span class="keyword">this</span>.palyNum)</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&apos;fastSeek&apos;</span> <span class="keyword">in</span> audioEle) { <span class="comment">// safari</span></span><br><span class="line">              audioEle.fastSeek(<span class="number">0</span>) <span class="comment">// &#x6539;&#x53D8;audio.currentTime&#x7684;&#x503C;</span></span><br><span class="line">              audioEle.load()</span><br><span class="line">            } <span class="keyword">else</span> {</span><br><span class="line">              audioEle.currentTime = <span class="number">0</span></span><br><span class="line">            }</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="number">111</span>)</span><br><span class="line">            audioEle.play()</span><br><span class="line">          }).catch(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&apos;play failed&apos;</span>)</span><br><span class="line">          })</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;style lang=&quot;less&quot; scoped&gt;</span></span><br><span class="line"><span class="regexp">#audioPlay_z {</span></span><br><span class="line"><span class="regexp">  display: none;</span></span><br><span class="line"><span class="regexp">}</span></span><br><span class="line"><span class="regexp">&lt;/</span>style&gt;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    <div>
+      
+      <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+  
+</div>
+
+      
+    </div>
+    
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Ringo 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="Ringo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Ringo</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ringo.org.cn/h5-audio-ios-2/" title="h5移动端audio消息声音依次提醒">https://ringo.org.cn/h5-audio-ios-2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/h5-keyboard-up-down/" rel="next" title="h5浏览器判断手机软键盘弹起和收缩">
+                  <i class="fa fa-chevron-left"></i> h5浏览器判断手机软键盘弹起和收缩
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/vue-loading-directive/" rel="prev" title="vue自定义loading指令">
+                  vue自定义loading指令 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/porter-avatar.png"
+      alt="Ringo">
+  <p class="site-author-name" itemprop="name">Ringo</p>
+  <div class="site-description" itemprop="description">体验人生, 享受生活</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:suzheng91@163.com" title="E-Mail &rarr; mailto:suzheng91@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ringo</span>
+  <br/>
+  <a href="http://beian.miit.gov.cn" target="_blank">鄂ICP备18019135号-1</a>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/lib/zclip/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
+
+
+<script>
+NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'TaUTweqTv6FAMCLJEiD76XtX-gzGzoHsz',
+    appKey: 'eT6LUFgRFRuMsy8LWbXj1UPD',
+    placeholder: '填写上邮箱可以接收到我的回复邮件哦!  (｡♥ᴗ♥｡) ',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/assets/shizuku.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

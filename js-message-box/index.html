@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/porter-32x32.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/porter-16x16.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;#x601D;&amp;#x8DEF;&amp;#x539F;&amp;#x751F;js&amp;#x6784;&amp;#x5EFA;&amp;#x6D88;&amp;#x606F;&amp;#x63D0;&amp;#x793A;&amp;#x6846;&amp;#x601D;&amp;#x8DEF;&amp;#x5E76;&amp;#x4E0D;&amp;#x590D;&amp;#x6742;&amp;#xFF1A;  &amp;#x521B;&amp;#x5EFA;&amp;#x6D88;&amp;#x606F;&amp;#x6846;&amp;#xFF0C;&amp;#x6">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原生js构建消息提示框">
+<meta property="og:url" content="https://ringo.org.cn/js-message-box/index.html">
+<meta property="og:site_name" content="Ringo">
+<meta property="og:description" content="&amp;#x601D;&amp;#x8DEF;&amp;#x539F;&amp;#x751F;js&amp;#x6784;&amp;#x5EFA;&amp;#x6D88;&amp;#x606F;&amp;#x63D0;&amp;#x793A;&amp;#x6846;&amp;#x601D;&amp;#x8DEF;&amp;#x5E76;&amp;#x4E0D;&amp;#x590D;&amp;#x6742;&amp;#xFF1A;  &amp;#x521B;&amp;#x5EFA;&amp;#x6D88;&amp;#x606F;&amp;#x6846;&amp;#xFF0C;&amp;#x6">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ringo.org.cn/js-message-box/js-message-box.png">
+<meta property="og:updated_time" content="2023-08-28T02:31:21.779Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="原生js构建消息提示框">
+<meta name="twitter:description" content="&amp;#x601D;&amp;#x8DEF;&amp;#x539F;&amp;#x751F;js&amp;#x6784;&amp;#x5EFA;&amp;#x6D88;&amp;#x606F;&amp;#x63D0;&amp;#x793A;&amp;#x6846;&amp;#x601D;&amp;#x8DEF;&amp;#x5E76;&amp;#x4E0D;&amp;#x590D;&amp;#x6742;&amp;#xFF1A;  &amp;#x521B;&amp;#x5EFA;&amp;#x6D88;&amp;#x606F;&amp;#x6846;&amp;#xFF0C;&amp;#x6">
+<meta name="twitter:image" content="https://ringo.org.cn/js-message-box/js-message-box.png">
+  <link rel="canonical" href="https://ringo.org.cn/js-message-box/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>原生js构建消息提示框 | Ringo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ringo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-lab">
+      
+    
+
+    <a href="/lab/" rel="section"><i class="menu-item-icon fa fa-fw fa-balance-scale"></i> <br>lab</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th-list"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ringo.org.cn/js-message-box/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ringo">
+      <meta itemprop="description" content="体验人生, 享受生活">
+      <meta itemprop="image" content="/images/porter-avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ringo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">原生js构建消息提示框
+
+          
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-11 16:17:52" itemprop="dateCreated datePublished" datetime="2019-10-11T16:17:52+08:00">2019-10-11</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-28 10:31:21" itemprop="dateModified" datetime="2023-08-28T10:31:21+08:00">2023-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/js-message-box/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/js-message-box/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+        <h5 id="&#x601D;&#x8DEF;"><a href="#&#x601D;&#x8DEF;" class="headerlink" title="&#x601D;&#x8DEF;"></a>&#x601D;&#x8DEF;</h5><p>&#x539F;&#x751F;js&#x6784;&#x5EFA;&#x6D88;&#x606F;&#x63D0;&#x793A;&#x6846;&#x601D;&#x8DEF;&#x5E76;&#x4E0D;&#x590D;&#x6742;&#xFF1A;</p>
+<ol>
+<li>&#x521B;&#x5EFA;&#x6D88;&#x606F;&#x6846;&#xFF0C;&#x6DFB;&#x52A0;&#x5230;body&#x4E2D;</li>
+<li>&#x5199;&#x6D88;&#x606F;&#x6846;&#x6837;&#x5F0F;&#xFF0C;&#x5305;&#x62EC;&#x56FE;&#x6807;&#xFF0C;&#x6D88;&#x606F;&#x6587;&#x672C;&#xFF0C;&#x5173;&#x95ED;&#x6309;&#x94AE;</li>
+<li>&#x6253;&#x5F00;&#x4E8B;&#x4EF6;&#xFF0C;&#x5173;&#x95ED;&#x4E8B;&#x4EF6;&#xFF0C;&#x6301;&#x7EED;&#x65F6;&#x95F4;&#xFF08;&#x5B9A;&#x65F6;&#x5668;&#xFF09;&#xFF0C;&#x662F;&#x5426;&#x663E;&#x793A;&#x5173;&#x95ED;&#x6309;&#x94AE;<blockquote>
+<p>&#x6700;&#x7EC8;&#x6548;&#x679C;&#x56FE;<br><img src="/js-message-box/js-message-box.png" alt="js-message-box"></p>
+</blockquote>
+</li>
+</ol>
+<a id="more"></a>
+<h6 id="&#x521B;&#x5EFA;Message&#x7C7B;"><a href="#&#x521B;&#x5EFA;Message&#x7C7B;" class="headerlink" title="&#x521B;&#x5EFA;Message&#x7C7B;"></a>&#x521B;&#x5EFA;Message&#x7C7B;</h6><blockquote>
+<p>es6&#x4EE3;&#x7801;&#xFF0C;&#x82E5;&#x9700;&#x8981;&#x517C;&#x5BB9;&#x8BF7;&#x7528;babel&#x8F6C;&#x4E00;&#x4E0B;</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Message</span> </span>{</span><br><span class="line">  <span class="keyword">constructor</span>() {</span><br><span class="line">    <span class="comment">// &#x521B;&#x5EFA;&#x6D88;&#x606F;&#x6846;&#x5143;&#x7D20;&#x5E76;&#x63D2;&#x5165;&#x5230;body&#x4E2D;</span></span><br><span class="line">    <span class="keyword">const</span> containerId = <span class="string">&apos;message-container&apos;</span>;</span><br><span class="line">    <span class="keyword">this</span>.containerEl = <span class="built_in">document</span>.getElementById(containerId);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.containerEl) {</span><br><span class="line">      <span class="keyword">this</span>.containerEl = <span class="built_in">document</span>.createElement(<span class="string">&apos;div&apos;</span>);</span><br><span class="line">      <span class="keyword">this</span>.containerEl.id = containerId;</span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(<span class="keyword">this</span>.containerEl);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// type &#x6D88;&#x606F;&#x7C7B;&#x578B;  text &#x6587;&#x672C;  duration &#x6D88;&#x606F;&#x663E;&#x793A;&#x65F6;&#x95F4;  closeable &#x662F;&#x5426;&#x663E;&#x793A;&#x5173;&#x95ED;&#x56FE;&#x6807;</span></span><br><span class="line">  show({ type = <span class="string">&apos;info&apos;</span>, text = <span class="string">&apos;&apos;</span>, duration = <span class="number">2000</span>, closeable = <span class="literal">false</span> }) {</span><br><span class="line">    <span class="comment">// &#x5728;&#x6D88;&#x606F;&#x6846;&#x7236;&#x5143;&#x7D20;&#x4E2D;&#x521B;&#x5EFA;&#x5F53;&#x524D;&#x6D88;&#x606F;&#x5143;&#x7D20;</span></span><br><span class="line">    <span class="keyword">let</span> messageEl = <span class="built_in">document</span>.createElement(<span class="string">&apos;div&apos;</span>);</span><br><span class="line">    messageEl.className = type + <span class="string">&apos; message move-in&apos;</span>;</span><br><span class="line">    messageEl.innerHTML = <span class="string">`&lt;span class=&quot;iconfont icon-<span class="subst">${type}</span>&quot;&gt;&lt;/span&gt;`</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#x6839;&#x636E;&#x4F20;&#x53C2;&#x8FDB;&#x884C;&#x5224;&#x65AD;&#xFF0C;&#x6709;&#x6587;&#x672C;&#x521B;&#x5EFA;&#x6587;&#x672C;&#x5143;&#x7D20;&#xFF0C;&#x9700;&#x8981;&#x5173;&#x95ED;&#x6309;&#x94AE;&#x5219;&#x6DFB;&#x52A0;&#x5173;&#x95ED;&#x5143;&#x7D20;</span></span><br><span class="line">    <span class="keyword">if</span> (text) { <span class="comment">// &#x82E5;&#x6709;&#x6587;&#x672C;&#x6D88;&#x606F;&#x5219;&#x6DFB;&#x52A0;&#x8FDB;&#x6D88;&#x606F;&#x5143;&#x7D20;&#x5185;</span></span><br><span class="line">      <span class="keyword">let</span> textEl = <span class="built_in">document</span>.createElement(<span class="string">&apos;div&apos;</span>);</span><br><span class="line">      textEl.className = <span class="string">&apos;text&apos;</span>;</span><br><span class="line">      textEl.innerText = text</span><br><span class="line">      messageEl.appendChild(textEl);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span> (closeable) { <span class="comment">// &#x82E5;&#x9700;&#x8981;&#x5173;&#x95ED;&#x56FE;&#x6807;&#x5219;&#x521B;&#x5EFA;&#x5173;&#x95ED;&#x5143;&#x7D20;</span></span><br><span class="line">      <span class="keyword">let</span> closeEl = <span class="built_in">document</span>.createElement(<span class="string">&apos;div&apos;</span>);</span><br><span class="line">      closeEl.className = <span class="string">&apos;close iconfont icon-close&apos;</span>;</span><br><span class="line">      messageEl.appendChild(closeEl);</span><br><span class="line">      closeEl.addEventListener(<span class="string">&apos;click&apos;</span>, () =&gt; {</span><br><span class="line">        <span class="keyword">this</span>.close(messageEl) <span class="comment">// &#x5173;&#x95ED;&#x5F53;&#x524D;&#x6D88;&#x606F;&#x5143;&#x7D20;</span></span><br><span class="line">      });</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#x4EE5;&#x4E0A;&#x6D88;&#x606F;&#x5143;&#x7D20;&#x521B;&#x5EFA;&#x597D;&#x540E;&#x6DFB;&#x52A0;&#x5230;&#x7236;&#x7EA7;&#x6D88;&#x606F;&#x6846;&#x4E2D;</span></span><br><span class="line">    <span class="keyword">this</span>.containerEl.appendChild(messageEl);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#x663E;&#x793A;&#x6301;&#x7EED;&#x65F6;&#x95F4; &#x9ED8;&#x8BA4;&#x663E;&#x793A;2s&#xFF0C;duration&#x4E3A;0&#x65F6;&#xFF0C;&#x6D88;&#x606F;&#x6846;&#x4E0D;&#x6D88;&#x5931;</span></span><br><span class="line">    <span class="keyword">if</span> (duration &gt; <span class="number">0</span>) {</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">        <span class="keyword">this</span>.close(messageEl); <span class="comment">// &#x5173;&#x95ED;&#x5F53;&#x524D;&#x6D88;&#x606F;&#x5143;&#x7D20;</span></span><br><span class="line">      }, duration);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> messageEl</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// &#x5173;&#x95ED;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x6837;&#x5F0F;&#x7684;&#x5904;&#x7406;</span></span><br><span class="line">  close(messageEl) {</span><br><span class="line">    messageEl.className = messageEl.className.replace(<span class="string">&apos;move-in&apos;</span>, <span class="string">&apos;&apos;</span>);</span><br><span class="line">    <span class="comment">// &#x589E;&#x52A0;&#x4E00;&#x4E2A;move-out&#x7C7B;</span></span><br><span class="line">    messageEl.className += <span class="string">&apos;move-out&apos;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// move-out&#x52A8;&#x753B;&#x7ED3;&#x675F;&#x540E;&#x628A;&#x5143;&#x7D20;&#x7684;&#x9AD8;&#x5EA6;&#x548C;&#x8FB9;&#x8DDD;&#x90FD;&#x8BBE;&#x7F6E;&#x4E3A;0</span></span><br><span class="line">    <span class="comment">// &#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x5728;css&#x4E2D;&#x8BBE;&#x7F6E;&#x4E86;transition&#x5C5E;&#x6027;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x8FC7;&#x6E21;&#x52A8;&#x753B;</span></span><br><span class="line">    messageEl.addEventListener(<span class="string">&apos;animationend&apos;</span>, () =&gt; {</span><br><span class="line">      messageEl.setAttribute(<span class="string">&apos;style&apos;</span>, <span class="string">&apos;height: 0; margin: 0&apos;</span>);</span><br><span class="line">    });</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#x8FD9;&#x4E2A;&#x5730;&#x65B9;&#x662F;&#x76D1;&#x542C;transition&#x7684;&#x8FC7;&#x6E21;&#x52A8;&#x753B;&#x7ED3;&#x675F;&#x4E8B;&#x4EF6;&#xFF0C;&#x5728;&#x52A8;&#x753B;&#x7ED3;&#x675F;&#x540E;&#x628A;&#x6D88;&#x606F;&#x4ECE;dom&#x6811;&#x4E2D;&#x79FB;&#x9664;&#x3002;</span></span><br><span class="line">    messageEl.addEventListener(<span class="string">&apos;transitionend&apos;</span>, () =&gt; {</span><br><span class="line">      <span class="comment">// Element&#x5BF9;&#x8C61;&#x5185;&#x90E8;&#x6709;&#x4E00;&#x4E2A;remove&#x65B9;&#x6CD5;&#xFF0C;&#x8C03;&#x7528;&#x4E4B;&#x540E;&#x53EF;&#x4EE5;&#x5C06;&#x8BE5;&#x5143;&#x7D20;&#x4ECE;dom&#x6811;&#x79CD;&#x79FB;&#x9664;&#xFF01;</span></span><br><span class="line">      messageEl.remove();</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h6 id="css&#x6837;&#x5F0F;"><a href="#css&#x6837;&#x5F0F;" class="headerlink" title="css&#x6837;&#x5F0F;"></a>css&#x6837;&#x5F0F;</h6><blockquote>
+<p>&#x6D88;&#x606F;&#x5F39;&#x7A97;&#x6837;&#x5F0F;&#x4EFF;&#x7167;element-ui&#x7684;</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">font-face</span> {<span class="attribute">font-family</span>: <span class="string">&quot;iconfont&quot;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&apos;//at.alicdn.com/t/font_1452792_q7efevxgs5l.eot?t=1570779373612&apos;</span>); <span class="comment">/* IE9 */</span></span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&apos;//at.alicdn.com/t/font_1452792_q7efevxgs5l.eot?t=1570779373612#iefix&apos;</span>) <span class="built_in">format</span>(<span class="string">&apos;embedded-opentype&apos;</span>), <span class="comment">/* IE6-IE8 */</span></span><br><span class="line">  <span class="built_in">url</span>(<span class="string">&apos;data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAU0AAsAAAAACqQAAATlAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDXgqHeIZkATYCJAMcCxAABCAFhG0HXBs4CRGVnOXJviiwm5Ft1dwCtrVTU6p3CE7FmFnvR28wn+ZDbb69YQb55LsIoSYGrUPN/dquR3b9xpodLajAZgrjCSVJkcH2HDCu932Xmj0AEUBZMHTipIM7vu+7rXuysh4vw0WoALaA9X+OpV60HZ7lv7YTPJSMtgo63BsPaEARzY0DLJC92XAgPB3gxp7a8GzsvBoIABmxyAZpbu1WIIGBtQRNs2dMmwCpZAPrIRNIRqHlSAayGzwkbhv3HsCu+OvJzygkEsCBp+A9+6e2TEa9FW29oppHMzp0YN/2PACc4wAKIBsAA8jmVp8GmuayQSHP1mdQAPhCAgdhW5+bZXVY/dYU65XHQ7mblxL4Sg5g4Lb7jyeAB4gAQ+cN7PC8AFjRvgAYYGUJgAOsDgFQwOoXAAGsKbL19K9gA2+ixSN8ASQDpBggF8GSXAadz71o8gUBJXi3V2QA8Y72CSMS70WvEe3N2AS/2X4rA5YHrJx17JX5QntuvBz+8Oa5e1G33KX7D4ZdepfywOlwRBx4YAYfdkx1OIlgugm6i2A4zCtW+X9DcTrtbvcwl2vMAe2yEaoq+42retgw9aB+zQyxDztkXtGCFQ1FHTF5f/6gHjZ0qPdMIQMHtGBCVh0ww/SDxn7lgKkbgdjWHio5VS05/cAR85h+1DisalfMa/pV4zKJGHbkBz8xn+lPjcf2Iy/MV/pL47ldI+yJX1k07Jr+qZGuqFeNj7UMu3JZ+8TMGma/Yn6mZx712xwtExuRqa25IGeTr6Mcw9eWfjziZs3p6GcpPstql1Uvr12e9JYfOWPV/javgaD+1B8qm95+H9yXPTxKGZq1PPXwH4NeBmN0/fGNm47XPT1Wt2lT3fGnnnvTxmPmWY7XbdxYf7zizW3E0/oX7N9/2QsRh5JAlXeIQ0ciEyOPHObhEsmaiDrSP/+IQym68va/FYnNvsq164GlWU3SM2Z8953imu0t/gMAKL59lJd5LokvWrdZDgkNudkrbvU77HfEb9tTIr8PlsoLnbY/Iv4Ix74L8yuMKYwtiinKPBs4NUkFx9TEk/RIGuIoY/pK4X1O5dFKya/ArxC5G0FyUSn2PzUxdmnV1OqpVUsXXIi/Un+lAefL/oj7uuV9ywct32DrOofjRc+Rnq8crPkqQb3oU1sD8TTrPvvjD3ZfxKEkUOWRbStVu4nA3msBAJ45A/cL4HmN1qwHPG+8onWAx7zOV7QFAOgq7h/wOF2jWV/r78FO5Zk8zq/aYMk2APBF52Pp9mTr5SUcqOVfYrlyis2VbBc3HezLlAzRCqMMB5BlAfjqhgL9bc8Qotbhf2IIyYEjigFKkoxk2Gzg2RSDQFIHsiyn422CiDqyD5Dpi4Dw9w0cX6+A8veDZNhf4IX6B4F/FGRq8zPapDajtxMYRUDXF8WWC+c5tZc0XxDeMiNFZUz9hPg4Sevc/GrxhAKyjX38PdyoOnLCOR3pesgyplI4gdVFpFpul3lT2x5oYTmv9DQRYCgIkKsXErNYwYXLq17t8y8gdJMxpKfvTPgTCC9ePVlbWCmQJ12h6nssnd5daEONjEOc08hy5Gh4IJMcI2X7Zgmw1EK0Rqa0tTTmOa1usX9D/jivAJDxOcSOztbV3dOL/df+/k2IsLT9zVp4387YBHERNm3GHu2HkaJkrVQAAAAA&apos;</span>) <span class="built_in">format</span>(<span class="string">&apos;woff2&apos;</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">&apos;//at.alicdn.com/t/font_1452792_q7efevxgs5l.woff?t=1570779373612&apos;</span>) <span class="built_in">format</span>(<span class="string">&apos;woff&apos;</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">&apos;//at.alicdn.com/t/font_1452792_q7efevxgs5l.ttf?t=1570779373612&apos;</span>) <span class="built_in">format</span>(<span class="string">&apos;truetype&apos;</span>), <span class="comment">/* chrome, firefox, opera, Safari, Android, iOS 4.2+ */</span></span><br><span class="line">  <span class="built_in">url</span>(<span class="string">&apos;//at.alicdn.com/t/font_1452792_q7efevxgs5l.svg?t=1570779373612#iconfont&apos;</span>) <span class="built_in">format</span>(<span class="string">&apos;svg&apos;</span>); <span class="comment">/* iOS 4.1- */</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.iconfont</span> {</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;iconfont&quot;</span> <span class="meta">!important</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">font-style</span>: normal;</span><br><span class="line">  <span class="attribute">-webkit-font-smoothing</span>: antialiased;</span><br><span class="line">  <span class="attribute">-moz-osx-font-smoothing</span>: grayscale;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.icon-info</span><span class="selector-pseudo">:before</span> {</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&quot;\e650&quot;</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.icon-error</span><span class="selector-pseudo">:before</span> {</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&quot;\e62b&quot;</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.icon-success</span><span class="selector-pseudo">:before</span> {</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&quot;\e649&quot;</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.icon-loading</span><span class="selector-pseudo">:before</span> {</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&quot;\e61c&quot;</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.icon-close</span><span class="selector-pseudo">:before</span> {</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&quot;\e6bf&quot;</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.icon-warning</span><span class="selector-pseudo">:before</span> {</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&quot;\e665&quot;</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#message-container</span> {</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span> {</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#edf2fc</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span> <span class="number">5px</span> <span class="number">5px</span> <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">40px</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">10px</span> <span class="number">0</span> <span class="number">#eee</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">  <span class="comment">/* &#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x8FC7;&#x6E21;&#x5C5E;&#x6027;&#xFF0C;&#x5F53;message&#x5143;&#x7D20;&#x7684;&#x9AD8;&#x5EA6;&#x548C;margin&#x53D8;&#x5316;&#x65F6;&#x5019;&#x5C06;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x8FC7;&#x6E21;&#x52A8;&#x753B; */</span></span><br><span class="line">  <span class="attribute">transition</span>: height <span class="number">0.2s</span> ease-in-out, margin <span class="number">0.2s</span> ease-in-out;</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span><span class="selector-class">.error</span> {</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#f56c6c</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fef0f0</span>;</span><br><span class="line">  <span class="attribute">border-color</span>: <span class="number">#fde2e2</span>;</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span><span class="selector-class">.info</span> {</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#909399</span>;</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span><span class="selector-class">.success</span> {</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#67C23A</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#f0f9eb</span>;</span><br><span class="line">  <span class="attribute">border-color</span>: <span class="number">#e1f3d8</span>;</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span><span class="selector-class">.warning</span> {</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#E6A23C</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fdf6ec</span>;</span><br><span class="line">  <span class="attribute">border-color</span>: <span class="number">#faecd8</span>;</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span><span class="selector-class">.loading</span> {</span><br><span class="line">  <span class="attribute">background-color</span>: transparent;</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span> <span class="selector-class">.text</span> {</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">20px</span> <span class="number">0</span> <span class="number">5px</span>;</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span> <span class="selector-class">.close</span> {</span><br><span class="line">  <span class="attribute">cursor</span>: pointer;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span> <span class="selector-class">.icon-loading</span> {</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">28px</span>;</span><br><span class="line">  <span class="attribute">animation</span>: loading <span class="number">1s</span> linear infinite;</span><br><span class="line">}</span><br><span class="line">@<span class="keyword">keyframes</span> loading {</span><br><span class="line">  <span class="selector-tag">from</span> {</span><br><span class="line">    <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(0deg);</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg);</span><br><span class="line">  }</span><br><span class="line">  <span class="selector-tag">to</span> {</span><br><span class="line">    <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(360deg);</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">rotate</span>(360deg);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">@<span class="keyword">keyframes</span> message-move-in {</span><br><span class="line">  0% {</span><br><span class="line">      <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">      <span class="attribute">transform</span>: <span class="built_in">translateY</span>(-100%);</span><br><span class="line">  }</span><br><span class="line">  100% {</span><br><span class="line">      <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">      <span class="attribute">transform</span>: <span class="built_in">translateY</span>(0);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span><span class="selector-class">.move-in</span> {</span><br><span class="line">  <span class="attribute">animation</span>: message-move-in <span class="number">0.3s</span> ease-in-out;</span><br><span class="line">}</span><br><span class="line">@<span class="keyword">keyframes</span> message-move-out {</span><br><span class="line">  0% {</span><br><span class="line">      <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">      <span class="attribute">transform</span>: <span class="built_in">translateY</span>(0);</span><br><span class="line">  }</span><br><span class="line">  100% {</span><br><span class="line">      <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">      <span class="attribute">transform</span>: <span class="built_in">translateY</span>(-100%);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#message-container</span> <span class="selector-class">.message</span><span class="selector-class">.move-out</span> {</span><br><span class="line">  <span class="attribute">animation</span>: message-move-out <span class="number">0.3s</span> ease-in-out;</span><br><span class="line">  <span class="attribute">animation-fill-mode</span>: forwards;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h6 id="&#x4F7F;&#x7528;"><a href="#&#x4F7F;&#x7528;" class="headerlink" title="&#x4F7F;&#x7528;"></a>&#x4F7F;&#x7528;</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Msg = <span class="keyword">new</span> Message();</span><br><span class="line"><span class="comment">// type: error/success/info/warning/loading</span></span><br><span class="line"><span class="comment">// duration &#x663E;&#x793A;&#x65F6;&#x95F4; 0 &#x4E3A;&#x4E0D;&#x6D88;&#x5931;</span></span><br><span class="line"><span class="comment">// closeable &#x662F;&#x5426;&#x663E;&#x793A;&#x5173;&#x95ED;&#x6309;&#x94AE;</span></span><br><span class="line">Msg.show({ <span class="attr">type</span>: <span class="string">&apos;error&apos;</span>, <span class="attr">text</span>: <span class="string">&apos;&#x8FD9;&#x91CC;&#x662F;&#x663E;&#x793A;&#x7684;&#x6D88;&#x606F;&apos;</span>, <span class="attr">duration</span>: <span class="number">0</span>, <span class="attr">closeable</span>: <span class="literal">false</span> });</span><br><span class="line"><span class="comment">// &#x81EA;&#x4E3B;&#x5173;&#x95ED;&#x5F39;&#x7A97;</span></span><br><span class="line"><span class="keyword">var</span> element = Msg.show({ <span class="attr">type</span>: <span class="string">&apos;loading&apos;</span>, <span class="attr">text</span>: <span class="string">&apos;&#x6B63;&#x5728;&#x52A0;&#x8F7D;&#x4E2D;&apos;</span>, <span class="attr">duration</span>: <span class="number">0</span>, <span class="attr">closeable</span>: <span class="literal">false</span> });</span><br><span class="line">Msg.close(element)</span><br></pre></td></tr></table></figure>
+
+<h6 id="babel-amp-amp-autoprefixer"><a href="#babel-amp-amp-autoprefixer" class="headerlink" title="babel &amp;&amp; autoprefixer"></a>babel &amp;&amp; autoprefixer</h6><p><a href="https://autoprefixer.github.io/" target="_blank" rel="noopener">autoprefixer online</a><br><a href="https://babeljs.io/repl" target="_blank" rel="noopener">babel online</a></p>
+
+    </div>
+
+    <div>
+      
+      <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+  
+</div>
+
+      
+    </div>
+    
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Ringo 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="Ringo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Ringo</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ringo.org.cn/js-message-box/" title="原生js构建消息提示框">https://ringo.org.cn/js-message-box/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/git-gitlab/" rel="next" title="gitlab内网登录push代码">
+                  <i class="fa fa-chevron-left"></i> gitlab内网登录push代码
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/ueditor-vue/" rel="prev" title="Ueditor + vue-ueditor-wrap 多语言切换及自定义上传图片按钮">
+                  Ueditor + vue-ueditor-wrap 多语言切换及自定义上传图片按钮 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#创建Message类"><span class="nav-number">1.1.</span> <span class="nav-text">创建Message类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#css样式"><span class="nav-number">1.2.</span> <span class="nav-text">css样式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#使用"><span class="nav-number">1.3.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#babel-amp-amp-autoprefixer"><span class="nav-number">1.4.</span> <span class="nav-text">babel &amp;&amp; autoprefixer</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/porter-avatar.png"
+      alt="Ringo">
+  <p class="site-author-name" itemprop="name">Ringo</p>
+  <div class="site-description" itemprop="description">体验人生, 享受生活</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:suzheng91@163.com" title="E-Mail &rarr; mailto:suzheng91@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ringo</span>
+  <br/>
+  <a href="http://beian.miit.gov.cn" target="_blank">鄂ICP备18019135号-1</a>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/lib/zclip/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
+
+
+<script>
+NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'TaUTweqTv6FAMCLJEiD76XtX-gzGzoHsz',
+    appKey: 'eT6LUFgRFRuMsy8LWbXj1UPD',
+    placeholder: '填写上邮箱可以接收到我的回复邮件哦!  (｡♥ᴗ♥｡) ',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/assets/shizuku.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
